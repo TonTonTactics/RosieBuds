@@ -2,43 +2,40 @@
 P3 ESP8266 Wifi Module Code
 
 TODO:
-- Switch all temps to kelvin DONE
-- fix error detection with temps'''
+- Setup socket and data sending mechanism'''
 
 import time
 import network
 import dht
 from machine import Pin
 
-# networkssid = ENTER SSID
-# networkkey = ENTER NETWORK KEY
+networkssid = "ENTER SSID"
+networkkey = "ENTER KEY"
 
 dhtsensor = dht.DHT22(Pin(15))
 
 # pinetwork = network.WLAN(network.WLAN.IF_STA) # Might have to use .active() if the object doesn't start activated?
 
-'''The following variables are for a system to detect clearly out of range temperatures and humidities.'''
-'''intervalstart = time.time()
-DHTSAMPLETIME = 5
-tempsum = 273.15
-templimits = [233.15, 353.15]
-
-humidsum = 0
-humidlimits = [10.0, 80.0]'''
-
 firstloop = True
 MAXTEMPVARIANCE = 10
 MAXHUMIDVARIANCE = 5
+temppredict = 0
+tempbuffer = []
+tempbuffertracker = 0
+tempdeltatracker = 0
+tempdeltas = []
+BUFFERSIZE = 6
+
+for i in range (0, BUFFERSIZE): # Setting up buffer and delta lists
+    tempbuffer.append (0)
+
+for j in range (0, BUFFERSIZE - 1):
+    tempdeltas.append (0)
 
 while True:
 
     if firstloop == True:
-        dhtsensor.measure ()
-        currentkelvin = dhtsensor.temperature () + 273.15
-        lastkelvin = currentkelvin
-        lasthumid = dhtsensor.humidity ()
-        print (currentkelvin)
-        print (dhtsensor.humidity ())
+        firstloop = False
 
     else:
         '''if not pinetwork.isconnected():
@@ -50,21 +47,32 @@ while True:
             print ("Connected to access point.")'''
         dhtsensor.measure ()
         currentkelvin = dhtsensor.temperature () + 273.15
+
+        tempbuffer [tempbuffertracker] = currentkelvin
+        if tempbuffertracker != 0:
+            tempdeltas [tempdeltatracker] = tempbuffer [tempbuffertracker] - tempbuffer [tempbuffertracker - 1]
+        else:
+            tempdeltas [tempdeltatracker] = tempbuffer [tempbuffertracker] - tempbuffer [BUFFERSIZE - 1]
         
-        if (currentkelvin - lastkelvin) > MAXTEMPVARIANCE:# Print if temperature is out of range
+        if abs (currentkelvin - temppredict) > MAXTEMPVARIANCE:# Print if temperature is out of range
             print ("Temperature reading outside of limits. Test sensor for incorrect readings.")
 
         else:
             print (currentkelvin)
+        
+        # In this section we estimate the next value based on how it has been changing (Mean Value Theorem)
+        temppredict = currentkelvin + (sum(tempdeltas) / BUFFERSIZE)
+        print (str(tempbuffer))
+        print ("Temp predict:\t" + str (temppredict))
 
-        if (dhtsensor.humidity () - lasthumid) > MAXHUMIDVARIANCE:
-            print ("Humidity reading outside of limits. Test sensor for icorrect readinngs.")
+        tempbuffertracker += 1
+        tempdeltatracker += 1
+        print ("Buffer Tracker: " + str (tempbuffertracker))
+        print ("Deleta Tracker: " + str (tempdeltatracker))
+        if tempbuffertracker >= BUFFERSIZE:
+            tempbuffertracker = 0
 
-        else:
-            print (dhtsensor.humidity ())
-
-        '''if timeloop > DHTSAMPLETIME: # Reset the average temp value and reset the time since interval
-            intervalstart = time.time ()
-            tempsum = 273.15'''
+        if tempdeltatracker >= BUFFERSIZE - 1:
+            tempdeltatracker = 0
 
     time.sleep(2)
