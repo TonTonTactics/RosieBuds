@@ -52,3 +52,4 @@ For more information, please check out the following documents:
 - [SQLmodel](https://sqlmodel.tiangolo.com/learn/)
 - [FastAPI](https://fastapi.tiangolo.com/learn/)
 - [Uvicorn](https://uvicorn.dev)
+- [SQLiteBrowser](https://sqlitebrowser.org)
