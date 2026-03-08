@@ -1,3 +1,7 @@
+""" 
+
+Yusuf Eldarieby, McMaster, 2026"""
+
 import os
 
 os.system("modprobe w1-gpio")

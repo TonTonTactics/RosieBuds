@@ -1,3 +1,7 @@
+""" 
+
+Yusuf Eldarieby, McMaster, 2026"""
+
 import time
 import board
 import adafruit_dht
