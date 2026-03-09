@@ -21,6 +21,7 @@ export default function Start() {
       <GoGame />
       <CreditBox />
       <Volume />
+      <Accessability />
     </>
   );
 }
@@ -67,6 +68,38 @@ function Volume() {
       <div onClick ={()=> setOn(Mute)}>
         {on ? "Unmute":"Mute"}
       </div>
+    </>
+  );
+}
+
+function Accessability() {
+  const [open, setOpen] = useState(false);
+  const [on, setOn] = useState(false);
+
+  function Setting() {
+    setOn(!on);
+
+    if (!on) {
+      console.log("(TEST) Setting: On")
+    } else {
+      console.log("(TEST) Setting: Off")
+    }
+  }
+
+  return(
+    <>
+    <div onClick ={()=> setOpen(true)}>
+      Accessability
+    </div>
+
+    {open && (
+      <div>
+        <div onClick={()=> setOpen(false)}>
+          close
+        </div>
+        <p onClick={()=> setOn (Setting)}> Setting: {on ? "On":"Off"}</p>
+      </div>
+    )}
     </>
   );
 }
