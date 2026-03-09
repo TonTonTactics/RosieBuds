@@ -21,12 +21,11 @@ export function GetSensors({ sensor_id }) {
   return (
     <div>
       {data.map(sensor => (
-        <div key={sensor.id}>
-          TS: {sensor.timestamp} | 
+        <div key={sensor.sensor_id}>
           ID: {sensor.sensor_id} |
-          M: {sensor.moisture} |
-          H: {sensor.humidity} |
-          T: {sensor.temperature}
+          Water Next: {sensor.water_next} |
+          Temperature: {sensor.temperature_rating} |
+          Humidity: {sensor.humidity_rating}
         </div>
       ))}
     </div>

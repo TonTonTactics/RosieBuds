@@ -39,7 +39,6 @@ class CreateSensor(SQLModel):
     temperature: float
     humidity: float
 
-
 class Guide(SQLModel, table=True):
     """
     IN PROGESS
