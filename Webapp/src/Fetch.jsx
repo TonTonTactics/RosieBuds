@@ -5,14 +5,14 @@ Antony Wiegand, Mcmaster, 2026*/
 
 import { useEffect, useState } from "react";
 
-export function GetSensors() {
+export function GetSensors({ sensor_id }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
-    fetch(`/sensors/?date=${today}`)
+    fetch(`/sensors/?date=${today}&sensor_id=${sensor_id}`)
       .then(response => response.json())
       .then(data => setData(data));
-  }, []);
+  }, [sensor_id]);
   
   if (data.length === 0) {
     return <div>Error</div>;

@@ -35,13 +35,13 @@ def post_sensor(sensor: models.CreateSensor):
     relations.create_sensors(sensor)
 
 @app.get("/sensors/")
-def get_sensors(date: date):
+def get_sensors(date: date, sensor_id: str):
     """
     Input: None
     1. Connects (grab data from date) function with .get event "/sensors/" \n
     Output: data from date
     """
-    return relations.select_sensors(date)
+    return relations.select_sensors(date, sensor_id)
 
 @app.delete("/sensors/")
 def delete_sensors(date: date):

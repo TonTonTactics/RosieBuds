@@ -25,7 +25,7 @@ def create_sensors(sensor: models.CreateSensor):
         session.commit()
         session.refresh(sensor_db)
 
-def select_sensors(date: date):
+def select_sensors(date: date, sensor_id: str):
     """
     Input: Date (YYYY,MM,DD)
     1. Opens (and closes once done) a task session
@@ -34,7 +34,7 @@ def select_sensors(date: date):
     Output: Sensor data from given date
     """
     with Session(db.engine) as session:
-        statement = select(models.Sensor).where(models.Sensor.timestamp == date)
+        statement = select(models.Sensor).where((models.Sensor.timestamp == date) & (models.Sensor.sensor_id == sensor_id))
         results = session.exec(statement)
         sensors = results.all()
         return sensors
