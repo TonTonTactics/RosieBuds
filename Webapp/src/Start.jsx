@@ -20,6 +20,7 @@ export default function Start() {
       <GoSetup />
       <GoGame />
       <CreditBox />
+      <Volume />
     </>
   );
 }
@@ -44,6 +45,28 @@ function CreditBox() {
         <p>Antony</p>
       </div>
     )}
+    </>
+  );
+}
+
+function Volume() {
+  const [on, setOn] = useState(false);
+
+  function Mute() {
+    setOn(!on);
+
+    if (!on) {
+      console.log("(TEST) Mute: On")
+    } else {
+      console.log("(TEST) Mute: Off")
+    }
+  }
+
+  return(
+    <>
+      <div onClick ={()=> setOn(Mute)}>
+        {on ? "Unmute":"Mute"}
+      </div>
     </>
   );
 }
