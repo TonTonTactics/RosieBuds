@@ -11,6 +11,7 @@ import uvicorn
 from . import db
 from . import relations
 from . import models
+from . import process
 
 app = FastAPI()
 
@@ -41,7 +42,7 @@ def get_sensors(date: date, sensor_id: str):
     1. Connects (grab data from date) function with .get event "/sensors/" \n
     Output: data from date
     """
-    return relations.select_sensors(date, sensor_id)
+    return process.rating(sensor_id, relations.select_sensors(date, sensor_id))
 
 @app.delete("/sensors/")
 def delete_sensors(date: date):

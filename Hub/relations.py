@@ -6,6 +6,7 @@ Antony Wiegand, McMaster, 2026"""
 
 from sqlmodel import Session, select, delete
 from datetime import date
+from statistics import median
 
 from . import models
 from . import db
@@ -29,15 +30,29 @@ def select_sensors(date: date, sensor_id: str):
     """
     Input: Date (YYYY,MM,DD)
     1. Opens (and closes once done) a task session
-    2. Finds and selects all sensor data from given date
-    3. Saves and refreshes \n
-    Output: Sensor data from given date
+    2. Finds and selects all sensor data from given date and sensor_id
+    3. Finds the median of each sensor.
+    4. Saves and refreshes \n
+    Output: Median sensor data from given date and sensor_id.
     """
     with Session(db.engine) as session:
         statement = select(models.Sensor).where((models.Sensor.timestamp == date) & (models.Sensor.sensor_id == sensor_id))
         results = session.exec(statement)
         sensors = results.all()
-        return sensors
+
+        m = [r.moisture for r in sensors]
+        t = [r.temperature for r in sensors]
+        h = [r.humidity for r in sensors]
+
+        median_m = median(m)
+        median_t = median(t)
+        median_h = median(h)
+
+        return {
+            "moisture": median_m,
+            "temperature": median_t,
+            "humidity": median_h
+        }
 
 def delete_sensors(date: date):
     """
