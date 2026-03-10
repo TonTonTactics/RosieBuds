@@ -7,6 +7,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
 import subprocess
+import hashlib
+import binascii
 
 hub = FastAPI()
 
@@ -20,11 +22,20 @@ class Wifi(BaseModel):
 
 @hub.post("/wifi")
 def connect_wifi(data: Wifi):
+    
+    psk_bytes = hashlib.pbkdf2_hmac(
+        "sha1",
+        data.password.encode("utf-8"),
+        data.ssid.encode("utf-8"),
+        4096,
+        32,
+    )
+    psk_hex = binascii.hexlify(psk_bytes).decode("ascii")
 
     config = f"""
 network={{
     ssid="{data.ssid}"
-    psk="{data.password}"
+    psk="{psk_hex}"
 }}
 """
 
