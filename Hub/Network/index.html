@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hub Setup</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+
+    <body>
+        <h1>Hub Setup</h1>
+        <div>
+            <div>
+                <label for="ssid">Wifi Name</label>
+                <input id="ssid" required>
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input id="password" type="password" required>
+            </div>
+
+            <div>
+                <button onclick="connectWifi()">Connect</button>
+            </div>
+            
+            <div>
+                <p id="status"></p>
+            </div>
+
+        </div>
+
+        <script src="index.js"></script>
+    </body>  
+</html>
