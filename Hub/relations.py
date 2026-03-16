@@ -36,7 +36,7 @@ def select_sensors(date: date, sensor_id: str):
     Output: Median sensor data from given date and sensor_id.
     """
     with Session(db.engine) as session:
-        statement = select(models.Sensor).where((models.Sensor.timestamp == date) & (models.Sensor.sensor_id == sensor_id))
+        statement = select(models.Sensor).where((models.Sensor.timestamp.like(f"{date}%")) & (models.Sensor.sensor_id == sensor_id))
         results = session.exec(statement)
         sensors = results.all()
 

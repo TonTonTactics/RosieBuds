@@ -10,7 +10,7 @@ from sqlmodel import SQLModel, create_engine
 from . import models
 
 #name and location of database
-sqlite_file_name = "hub/database.db"
+sqlite_file_name = "/home/yusufeldar/P3-1P13-plantapp/Hub/database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
 # creates and connects database to location
