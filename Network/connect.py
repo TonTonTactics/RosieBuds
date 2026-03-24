@@ -142,8 +142,22 @@ def connect_wpaenterpriseTTLS(config: models.WpaEnterpriseTTLS):
 
 
 def connect_wpaenterprisePEAP(config: models.WpaEnterprisePEAP):
+    con_name = "Reznet-WiFi"
+
+    result = run_nmcli([
+        "nmcli","connection","add",
+        "type","wifi",
+        'ifname','wlan0',
+        'con-name',con_name,
+        "ssid",config.wifiname
+    ])
+
+    if result["status"] == "failed":
+        return result
+
     cmd = [
-        "nmcli", "dev", "wifi", "connect", config.wifiname,
+        "nmcli", "connection", 'modify', con_name,
+        "wifi-sec.key-mgmt", "wpa-eap",
         "802-1x.eap", "peap",
         "802-1x.identity", config.username,
         "802-1x.password", config.password,
@@ -161,4 +175,10 @@ def connect_wpaenterprisePEAP(config: models.WpaEnterprisePEAP):
     if config.ca_cert and not config.noncacert:
         cmd += ["802-1x.ca-cert", config.ca_cert]
 
-    return run_nmcli(cmd)
+    result = run_nmcli(cmd)
+    if result["status"] == "failed":
+        return result
+    
+    connect = ["nmcli", "connection", "up", con_name, 'ifname', 'wlan0']
+
+    return run_nmcli(connect)

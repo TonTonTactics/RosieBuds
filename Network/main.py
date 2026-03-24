@@ -81,9 +81,13 @@ def connect_wifi(data: models.WifiPayload):
 @network.post("/wifi")
 def save_wifi(data: models.WifiPayload):
     """Save wifi credentials and try connecting"""
+    print('=== /wifi called ===')
+    print('received payload:', data.model_dump())
 
     wifi_dict = data.model_dump()
     encrypted_entry = hash.encrypt_data(wifi_dict)
+
+    print('encryption successful')
 
     save_credentials(
         {
@@ -92,10 +96,15 @@ def save_wifi(data: models.WifiPayload):
         }
     )
 
+    print("creds saved to json")
+
+    stop_result = apmode.stop_ap_mode()
+
+    print("connect_wifi results:", stop_result)
+
     result = connect_wifi(data)
 
-    if result.get("status") == "connected":
-        apmode.stop_ap_mode()
+    print(result)
 
     return {
         "status": "saved",

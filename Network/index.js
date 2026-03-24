@@ -77,6 +77,7 @@ function handleAuthChange() {
     }
 }
 
+document.getElementById("connectBtn").addEventListener("click", connectWifi);
 async function connectWifi() {
     const statusEl = document.getElementById("status");
     const wifiname = document.getElementById("networkname").value.trim();

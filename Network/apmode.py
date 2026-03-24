@@ -3,7 +3,6 @@ import subprocess
 
 HOTSPOT_NAME = "hub-ap"
 HOTSPOT_SSID = "The Hub"
-HOTSPOT_PASSWORD = "plantsetup123"
 
 
 def run_cmd(cmd: list[str]):
@@ -29,7 +28,6 @@ def run_cmd(cmd: list[str]):
 
 def start_ap_mode(
     ssid: str = HOTSPOT_SSID,
-    password: str = HOTSPOT_PASSWORD,
     ifname: str = "wlan0"
 ):
     """Start access point mode with NetworkManager."""
@@ -38,7 +36,6 @@ def start_ap_mode(
         "ifname", ifname,
         "con-name", HOTSPOT_NAME,
         "ssid", ssid,
-        "password", password,
     ]
     return run_cmd(cmd)
 
