@@ -1,78 +1,49 @@
-'''Gabriel Walker 2026
-P3 ESP8266 Wifi Module Code
-
-TODO:
-- Setup socket and data sending mechanism'''
-
 import time
 import network
-import dht
-from machine import Pin
+import requests
+import machine
+import dht20
+import urequests as requests
+from machine import Pin, I2C
+# from dht20_sensor import sensor
 
-networkssid = "ENTER SSID"
-networkkey = "ENTER KEY"
+networkssid = "monday-46"
+networkkey = "raspberry"
+# Web database location = http://127.0.0.1:8000/sensors/
 
-dhtsensor = dht.DHT22(Pin(15))
+# Soil moisture range [0-2500]
 
-# pinetwork = network.WLAN(network.WLAN.IF_STA) # Might have to use .active() if the object doesn't start activated?
+'''networkssid = "Gabriel's Pixel"
+networkkey = "abcd1234"'''
 
-firstloop = True
-MAXTEMPVARIANCE = 10
-MAXHUMIDVARIANCE = 5
-temppredict = 0
-tempbuffer = []
-tempbuffertracker = 0
-tempdeltatracker = 0
-tempdeltas = []
-BUFFERSIZE = 6
+huburl = 'https://192.168.250.63/sensors/'
 
-for i in range (0, BUFFERSIZE): # Setting up buffer and delta lists
-    tempbuffer.append (0)
+i2c = machine.I2C(scl=Pin(22), sda=Pin(21), freq=50000)
+dhtsensor = dht20.DHT20(56, i2c)
 
-for j in range (0, BUFFERSIZE - 1):
-    tempdeltas.append (0)
+moisture = machine.ADC (Pin(4))
+
+'''pinetwork = network.WLAN(network.WLAN.IF_STA) # Might have to use .active() if the object doesn't start activated?
+pinetwork.active (False)
+time.sleep(5)
+pinetwork.active (True)'''
 
 while True:
+    '''if not pinetwork.isconnected():
+        while not pinetwork.isconnected():
+            print(pinetwork.scan())
+            pinetwork.connect (networkssid)
+            print ("Attempting to connect...")
+            time.sleep(3)
 
-    if firstloop == True:
-        firstloop = False
-
-    else:
-        '''if not pinetwork.isconnected():
-            while not pinetwork.isconnected():
-                pinetwork.connect (networkssid, networkkey)
-                print ("Attempting to connect...")
-                time.sleep(3000)
-
-            print ("Connected to access point.")'''
-        dhtsensor.measure ()
-        currentkelvin = dhtsensor.temperature () + 273.15
-
-        tempbuffer [tempbuffertracker] = currentkelvin
-        if tempbuffertracker != 0:
-            tempdeltas [tempdeltatracker] = tempbuffer [tempbuffertracker] - tempbuffer [tempbuffertracker - 1]
-        else:
-            tempdeltas [tempdeltatracker] = tempbuffer [tempbuffertracker] - tempbuffer [BUFFERSIZE - 1]
+        print ("Connected to access point.")'''
+    soilmoisture = moisture.read()  
+    print (soilmoisture)
+    print (i2c.scan())      
+    readings = dhtsensor.measurements
         
-        if abs (currentkelvin - temppredict) > MAXTEMPVARIANCE:# Print if temperature is out of range
-            print ("Temperature reading outside of limits. Test sensor for incorrect readings.")
-
-        else:
-            print (currentkelvin)
-        
-        # In this section we estimate the next value based on how it has been changing (Mean Value Theorem)
-        temppredict = currentkelvin + (sum(tempdeltas) / BUFFERSIZE)
-        print (str(tempbuffer))
-        print ("Temp predict:\t" + str (temppredict))
-
-        tempbuffertracker += 1
-        tempdeltatracker += 1
-        print ("Buffer Tracker: " + str (tempbuffertracker))
-        print ("Deleta Tracker: " + str (tempdeltatracker))
-        if tempbuffertracker >= BUFFERSIZE:
-            tempbuffertracker = 0
-
-        if tempdeltatracker >= BUFFERSIZE - 1:
-            tempdeltatracker = 0
+    print (readings)
+    
+    r = requests.post(huburl, data='Hi')
 
     time.sleep(2)
