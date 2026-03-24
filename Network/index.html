@@ -1,283 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hub Setup</title>
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-    <h1>Hub Setup</h1>
-    <div>
-        <div id="wifisecurityDiv">
-            <label for="security">Security</label>
-            <select id="security" required>
-                <option value="none">None</option>
-                <option value="leap">LEAP</option>
-                <option value="wpa2personal">WPA & WPA2 (Personal)</option>
-                <option value="wpa2enterprise">WPA & WPA2 (Enterprise)</option>
-                <option value="wpa3personal">WPA3 (Personal)</option>
-                <option value="enhancedopen">Enhanced Open</option>
-            </select>
-        </div>
+    <main>
+        <h1>Hub Setup</h1>
 
-        <div id="networknameDiv">
-            <label for="networkname">Wifi Name</label>
-            <input id="networkname" required>
-        </div>
-
-        <div id="leapDiv" style="display:none;">
-            <div>
-            <label for="leapusername">LEAP Username</label>
-            <input id="leapusername" type="text">
-            </div>
-            
-            <div>
-            <label for="leappassword">LEAP Password</label>
-            <input id="leappassword" type="password">
-            </div>
-        </div>
-
-        <div id="wpa2personalDiv" style="display:none;">
-            <label for="wpapersonalpassword">Password</label>
-            <input id="wpapersonalpassword" type="password">
-        </div>
-
-        <div id="wpa2enterpriseDiv" style="display:none;">
-            <label for="authentication">Authentication</label>
-            <select id="authentication">
-                <option value="tls">TLS</option>
-                <option value="leap">LEAP</option>
-                <option value="pwd">PWD</option>
-                <option value="fast">FAST</option>
-                <option value="ttls">Tunneled TLS</option>
-                <option value="peap">PEAP</option>
-            </select>
-        </div>
-
-        <div id="tlsauthDiv" style="display:none;">
-
-            <div>
-                <label for="tlsidentity">TLS Identity</label>
-                <input id="tlsidentity" type="text">
-            </div>
-
-            <div>
-                <label for="tlsdomain">Domain</label>
-                <input id="tlsdomain" type="text">
-            </div>
-
-            <div>
-                <label for="tlscacert">CA Certificate</label>
-                <input id="tlscacert" type="file">
-            </div>
-
-            <div>
-                <label for="tlscacertpassword">CA Certificate Password</label>
-                <input id="tlscacertpassword" type="password">
-            </div>
-            
-            <div>
-                <input id="tlsnocacert" type="checkbox">
-                <label for="tlsnocacert">No CA Certificate</label>
-            </div>
-
-            <div>
-                <label for="tlsusercert">User Certificate</label>
-                <input id="tlsusercert" type="file">
-            </div>
-            
-            <div>
-                <label for="tlsusercertpassword">User Certificate Password</label>
-                <input id="tlsusercertpassword" type="password">
-            </div>
-            
-            <div>
-                <label for="tlsuserprivatekey">User Private Key</label>
-                <input id="tlsuserprivatekey" type="file">
-            </div>
-            
-            <div>
-                <label for="tlsuserprivatekeypassword">User Private Key Password</label>
-                <input id="tlsuserprivatekeypassword" type="password">
-            </div>
-        </div>
-
-        <div id="leapauthDiv" style="display:none;">
-            <div>
-                <label for="leapauthusername">LEAP Username</label>
-                <input id="leapauthusername" type="text">
-            </div>
-
-            <div>
-                <label for="leapauthpassword">LEAP Password</label>
-                <input id="leapauthpassword" type="password">
-            </div>    
-        </div>
-
-        <div id="pwdDiv" style="display:none;">
-            <div>
-                <label for="pwdusername">PWD Username</label>
-                <input id="pwdusername" type="text">
-            </div>
-
-            <div>
-                <label for="pwdpassword">PWD Password</label>
-                <input id="pwdpassword" type="password">
-            </div> 
-        </div>
-
-        <div id="fastDiv" style="display:none;">
-
-            <div>
-                <label for="anonymousidentity">Anonymous Identity</label>
-                <input id="anonymousidentity" type="text">
-            </div>
-
-            <div>
-                <label for="pacprovisioning">PAC Provisioning</label>
-                <select id="pacprovisioning">
-                <option value="Anonymous">Anonymous</option>
-                <option value="Authenticated">Authenticated</option>
-                <option value="Both">Both</option>
+        <div id="setup-form">
+            <div id="wifisecurityDiv">
+                <label for="security">Security</label>
+                <select id="security" required>
+                    <option value="none">None</option>
+                    <option value="leap">LEAP</option>
+                    <option value="wpa2personal">WPA & WPA2 (Personal)</option>
+                    <option value="wpa2enterprise">WPA & WPA2 (Enterprise)</option>
+                    <option value="wpa3personal">WPA3 (Personal)</option>
+                    <option value="enhancedopen">Enhanced Open</option>
                 </select>
             </div>
 
-            <div>
-                <label for="pacfile">PAC File</label>
-                <input id="pacfile" type="file">    
+            <div id="networknameDiv">
+                <label for="networkname">WiFi Name</label>
+                <input id="networkname" type="text" required>
             </div>
 
-            <div>
-                <label for="innerauth">Inner Auth</label>
-                <select id="innerauth">
-                <option value="gtc">GTC</option>
-                <option value="mschapv2">MSCHAPv2</option>
+            <div id="leapDiv" style="display: none;">
+                <div>
+                    <label for="leapusername">LEAP Username</label>
+                    <input id="leapusername" type="text">
+                </div>
+
+                <div>
+                    <label for="leappassword">LEAP Password</label>
+                    <input id="leappassword" type="password">
+                </div>
+            </div>
+
+            <div id="wpa2personalDiv" style="display: none;">
+                <label for="wpapersonalpassword">Password</label>
+                <input id="wpapersonalpassword" type="password">
+            </div>
+
+            <div id="wpa2enterpriseDiv" style="display: none;">
+                <label for="authentication">Authentication</label>
+                <select id="authentication">
+                    <option value="tls">TLS</option>
+                    <option value="leap">LEAP</option>
+                    <option value="pwd">PWD</option>
+                    <option value="fast">FAST</option>
+                    <option value="ttls">Tunneled TLS</option>
+                    <option value="peap">PEAP</option>
                 </select>
             </div>
 
-            <div>
-                <label for="fastusername">Username</label>
-                <input id="fastusername" type="text">
+            <div id="tlsauthDiv" style="display: none;">
+                <div>
+                    <label for="tlsidentity">TLS Identity</label>
+                    <input id="tlsidentity" type="text">
+                </div>
+
+                <div>
+                    <label for="tlsdomain">Domain</label>
+                    <input id="tlsdomain" type="text">
+                </div>
+
+                <div>
+                    <label for="tlscacert">CA Certificate</label>
+                    <input id="tlscacert" type="file">
+                </div>
+
+                <div>
+                    <label for="tlscacertpassword">CA Certificate Password</label>
+                    <input id="tlscacertpassword" type="password">
+                </div>
+
+                <div>
+                    <input id="tlsnocacert" type="checkbox">
+                    <label for="tlsnocacert">No CA Certificate</label>
+                </div>
+
+                <div>
+                    <label for="tlsusercert">User Certificate</label>
+                    <input id="tlsusercert" type="file">
+                </div>
+
+                <div>
+                    <label for="tlsusercertpassword">User Certificate Password</label>
+                    <input id="tlsusercertpassword" type="password">
+                </div>
+
+                <div>
+                    <label for="tlsuserprivatekey">User Private Key</label>
+                    <input id="tlsuserprivatekey" type="file">
+                </div>
+
+                <div>
+                    <label for="tlsuserprivatekeypassword">User Private Key Password</label>
+                    <input id="tlsuserprivatekeypassword" type="password">
+                </div>
+            </div>
+
+            <div id="leapauthDiv" style="display: none;">
+                <div>
+                    <label for="leapauthusername">LEAP Username</label>
+                    <input id="leapauthusername" type="text">
+                </div>
+
+                <div>
+                    <label for="leapauthpassword">LEAP Password</label>
+                    <input id="leapauthpassword" type="password">
+                </div>
+            </div>
+
+            <div id="pwdDiv" style="display: none;">
+                <div>
+                    <label for="pwdusername">PWD Username</label>
+                    <input id="pwdusername" type="text">
+                </div>
+
+                <div>
+                    <label for="pwdpassword">PWD Password</label>
+                    <input id="pwdpassword" type="password">
+                </div>
+            </div>
+
+            <div id="fastDiv" style="display: none;">
+                <div>
+                    <label for="anonymousidentity">Anonymous Identity</label>
+                    <input id="anonymousidentity" type="text">
+                </div>
+
+                <div>
+                    <label for="pacprovisioning">PAC Provisioning</label>
+                    <select id="pacprovisioning">
+                        <option value="Anonymous">Anonymous</option>
+                        <option value="Authenticated">Authenticated</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="pacfile">PAC File</label>
+                    <input id="pacfile" type="file">
+                </div>
+
+                <div>
+                    <label for="innerauth">Inner Auth</label>
+                    <select id="innerauth">
+                        <option value="gtc">GTC</option>
+                        <option value="mschapv2">MSCHAPv2</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="fastusername">Username</label>
+                    <input id="fastusername" type="text">
+                </div>
+
+                <div>
+                    <label for="fastpassword">Password</label>
+                    <input id="fastpassword" type="password">
+                </div>
+            </div>
+
+            <div id="ttlsauthDiv" style="display: none;">
+                <div>
+                    <label for="ttlsanonymousidentity">Anonymous Identity</label>
+                    <input id="ttlsanonymousidentity" type="text">
+                </div>
+
+                <div>
+                    <label for="ttlsdomain">Domain</label>
+                    <input id="ttlsdomain" type="text">
+                </div>
+
+                <div>
+                    <label for="ttlscacert">CA Certificate</label>
+                    <input id="ttlscacert" type="file">
+                </div>
+
+                <div>
+                    <label for="ttlscacertpassword">CA Certificate Password</label>
+                    <input id="ttlscacertpassword" type="password">
+                </div>
+
+                <div>
+                    <input id="ttlsnocacert" type="checkbox">
+                    <label for="ttlsnocacert">No CA Certificate</label>
+                </div>
+
+                <div>
+                    <label for="ttlsinnerauth">Inner Auth</label>
+                    <select id="ttlsinnerauth">
+                        <option value="pap">PAP</option>
+                        <option value="mschap">MSCHAP</option>
+                        <option value="mschapv2">MSCHAPv2</option>
+                        <option value="mschapv2noeap">MSCHAPv2 (No EAP)</option>
+                        <option value="chap">CHAP</option>
+                        <option value="md5">MD5</option>
+                        <option value="gtc">GTC</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="ttlsusername">Username</label>
+                    <input id="ttlsusername" type="text">
+                </div>
+
+                <div>
+                    <label for="ttlspassword">Password</label>
+                    <input id="ttlspassword" type="password">
+                </div>
+            </div>
+
+            <div id="peapDiv" style="display: none;">
+                <div>
+                    <label for="peapanonymousidentity">Anonymous Identity</label>
+                    <input id="peapanonymousidentity" type="text">
+                </div>
+
+                <div>
+                    <label for="peapdomain">Domain</label>
+                    <input id="peapdomain" type="text">
+                </div>
+
+                <div>
+                    <label for="peapcacert">CA Certificate</label>
+                    <input id="peapcacert" type="file">
+                </div>
+
+                <div>
+                    <label for="peapcacertpassword">CA Certificate Password</label>
+                    <input id="peapcacertpassword" type="password">
+                </div>
+
+                <div>
+                    <input id="peapnocacert" type="checkbox">
+                    <label for="peapnocacert">No CA Certificate</label>
+                </div>
+
+                <div>
+                    <label for="peapinnerauth">Inner Auth</label>
+                    <select id="peapinnerauth">
+                        <option value="mschapv2">MSCHAPv2</option>
+                        <option value="md5">MD5</option>
+                        <option value="gtc">GTC</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="peapusername">Username</label>
+                    <input id="peapusername" type="text">
+                </div>
+
+                <div>
+                    <label for="peappassword">Password</label>
+                    <input id="peappassword" type="password">
+                </div>
+            </div>
+
+            <div id="wpa3personalDiv" style="display: none;">
+                <label for="wpa3password">Password</label>
+                <input id="wpa3password" type="password">
             </div>
 
             <div>
-                <label for="fastpassword">Password</label>
-                <input id="fastpassword" type="password">
+                <button type="button" onclick="connectWifi()">Connect</button>
+            </div>
+
+            <div>
+                <p id="status"></p>
             </div>
         </div>
+    </main>
 
-        <div id="ttlsauthDiv" style="display:none;">
-
-            <div>
-                <label for="ttlsanonymousidentity">Anonymous Identity</label>
-                <input id="ttlsanonymousidentity" type="text">
-            </div>
-
-            <div>
-                <label for="ttlsdomain">Domain</label>
-                <input id="ttlsdomain" type="text">
-            </div>
-
-            <div>
-                <label for="ttlscacert">CA Certificate</label>
-                <input id="ttlscacert" type="file">
-            </div>
-
-            <div>
-                <label for="ttlscacertpassword">CA Certificate Password</label>
-                <input id="ttlscacertpassword" type="password">
-            </div>
-
-            <div>
-                <input id="ttlsnocacert" type="checkbox">
-                <label for="ttlsnocacert">No CA Certificate</label>
-            </div>
-
-            <div>
-                <label for="ttlsinnerauth">Inner Auth</label>
-                <select id="ttlsinnerauth">
-                    <option value="pap">PAP</option>
-                    <option value="mschap">MSCHAP</option>
-                    <option value="mschapv2">MSCHAPv2</option>
-                    <option value="mschapv2noeap">MSCHAPv2 (No EAP)</option>
-                    <option value="chap">CHAP</option>
-                    <option value="md5">MD5</option>
-                    <option value="gtc">GTC</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="ttlsusername">Username</label>
-                <input id="ttlsusername" type="text">
-            </div>
-
-            <div>
-                <label for="ttlspassword">Password</label>
-                <input id="ttlspassword" type="password">
-            </div>
-        </div>
-
-        <div id="peapDiv" style="display:none;">
-            <div>
-                <label for="peapanonymousidentity">Anonymous Identity</label>
-                <input id="peapanonymousidentity" type="text">          
-            </div>
-
-            <div>
-                <label for="peapdomain">Domain</label>
-                <input id="peapdomain" type="text">
-            </div>
-
-            <div>
-                <label for="peapcacert">CA Certificate</label>
-                <input id="peapcacert" type="file">
-            </div>
-
-            <div>
-                <label for="peapcacertpassword">CA Certificate Password</label>
-                <input id="peapcacertpassword" type="password">
-            </div>
-
-            <div>
-                <input id="peapnocacert" type="checkbox">
-                <label for="peapnocacert">No CA Certificate</label>
-            </div>
-
-            <div>
-                <label for="peapinnerauth">Inner Auth</label>
-                <select id="peapinnerauth">
-                <option value="mschapv2">MSCHAPv2</option>
-                <option value="md5">MD5</option>
-                <option value="gtc">GTC</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="peapusername">Username</label>
-                <input id="peapusername" type="text">
-            </div>
-            
-            <div>
-                <label for="peappassword">Password</label>
-                <input id="peappassword" type="password">
-            </div>
-        </div>
-
-        <div id="wpa3personalDiv" style="display:none;">
-            <label for="wpa3password">Password</label>
-            <input id="wpa3password" type="password">
-        </div>
-
-        <div>
-            <button onclick="connectWifi()">Connect</button>
-        </div>
-
-        <div>
-            <p id="status"></p>
-        </div>
-    </div>
-
-
-<script module="module" src="./index.js"></script>
+    <script type="module" src="./index.js"></script>
 </body>
 </html>
