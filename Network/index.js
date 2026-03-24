@@ -41,15 +41,15 @@ function handleAuthChange() {
 }
 
 async function connectWifi() {
-    const ssid = document.getElementById('networkname').value;
+    const wifiname = document.getElementById('wifiname').value;
     const security = document.getElementById('security').value;
 
-    if (!ssid) {
+    if (!wifi) {
         document.getElementById('status').innerText = 'Please enter a WiFi name!';
         return;
     }
 
-    let body = { ssid };
+    let body = { wifiname: wifiname };
 
     if (security === "none") {
         body.type = "open";
@@ -67,8 +67,8 @@ async function connectWifi() {
 
     else if (security === "leap") {
         body.type = "leap";
-        body.username = document.getElementById('leapusername').value;
-        body.password = document.getElementById('leappassword').value;
+        body.leapusername = document.getElementById('leapusername').value;
+        body.leappassword = document.getElementById('leappassword').value;
     }
 
     else if (security === "enhancedopen") {
