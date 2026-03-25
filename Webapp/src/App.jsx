@@ -9,6 +9,7 @@ import Start from "./Start.jsx";
 import Game from "./Game.jsx";
 import Dashboard from "./Dashboard.jsx";
 import Guidebook from "./Guidebook.jsx";
+import './Start.css';
 
 // RUN npm run dev -- --host (from inside Webapp folder, needs access to package.json)
 

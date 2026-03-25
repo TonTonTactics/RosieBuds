@@ -4,6 +4,7 @@ Antony Wiegand, Mcmaster, 2026*/}
 
 import { GoGame, GoDashboard } from "./Routes.jsx"
 import { useState, useEffect } from "react";
+import "./Start.css";
 
 
 export default function Start() {
@@ -13,18 +14,21 @@ export default function Start() {
     2. routes: setup, game
     Output: None
     */
-  const [bg, setBg] = useState("intro");
+  const [bg, setBg] = useState("/intro.gif");
 
   useEffect(() => {
+    const preloadLoop = new Image();
+    preloadLoop.src = "/loop.gif";
     const timer = setTimeout(() => {
-      setBg("loop");
+      setBg("/loop.gif");
     }, 4000); // change this to your intro gif length in ms
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className={`start-page bg-${bg}`}>
+    <div className={`start-page`}>
+      <img className="bg-gif" src={bg} alt="background" />
       <h1>START</h1>
       <GoDashboard />
       <GoGame />

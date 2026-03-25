@@ -1,16 +1,28 @@
+:root {
+  margin:0;
+  height:100%;
+}
+
 .start-page {
+  position: relative;
   min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  overflow:hidden;
 }
 
-/* Intro GIF */
-.bg-intro {
-  background-image: url("Webapp/src/assets/backgrounds/Start walkgif.gif");
+.bg-gif {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+  z-index: -1;
 }
 
-/* Looping GIF */
-.bg-loop {
-  background-image: url("Webapp/src/assets/backgrounds/Start sitgif.gif");
+.content {
+  position: relative;
+  z-index: 1;
+  color: white;
 }
