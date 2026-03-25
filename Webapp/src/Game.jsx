@@ -4,6 +4,7 @@ Antony Wiegand, Mcmaster, 2026*/
 
 import { useState } from 'react';
 import { GoStart } from './Routes.jsx';
+import "./Game.css"
 
 export default function Game() {
 
@@ -56,7 +57,8 @@ export default function Game() {
     }
 
     return (
-        <>
+        <div className="page">
+            <img className="game" src="game.png" alt="background" />
             <h1>GAME</h1>
             <div className="status">{status}</div>
 
@@ -77,7 +79,7 @@ export default function Game() {
             </div>
             <button onClick={handleRestart} > Restart </button>
             <GoStart />
-        </>
+        </div>
     );
 }
 

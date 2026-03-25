@@ -18,6 +18,17 @@ export function GoStart () {
   );
 }
 
+export function GoSetup () {
+    /*
+    Input: None
+    1. creates navigate variable using useNavigate function.
+    Output: When clicked, takes you to setup.
+    */
+    const navigate = useNavigate();
+    return (
+        <div className="gosetup" onClick={() => navigate("/setup")}>Setup</div>
+  );
+}
 
 export function GoGame () {
     /*

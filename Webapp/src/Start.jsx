@@ -14,8 +14,8 @@ export default function Start() {
     2. routes: setup, game
     Output: None
     */
+  
   const [bg, setBg] = useState("/intro.gif");
-
   useEffect(() => {
     const preloadLoop = new Image();
     preloadLoop.src = "/loop.gif";
@@ -27,7 +27,7 @@ export default function Start() {
   }, []);
 
   return (
-    <div className={`start-page`}>
+    <div className={`page`}>
       <img className="bg-gif" src={bg} alt="background" />
       <h1>START</h1>
       <GoDashboard />

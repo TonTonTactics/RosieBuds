@@ -4,6 +4,7 @@ Antony Wiegand, Mcmaster, 2026*/
 import { GoStart,GoGuidebook } from "./Routes.jsx";
 import { GetSensors } from "./Fetch.jsx"
 import { useState } from "react";
+import "./Dashboard.css"
 
 export default function Dashboard() {
   /*
@@ -14,12 +15,13 @@ export default function Dashboard() {
   Output: None
   */
   return (
-    <>
+    <div className="page">
+      <img className="dashboard" src="dashboard.png" alt="background" />
       <h1>DASHBOARD</h1>
       <GoStart />
       <GoGuidebook />
       <Slot1 />
-    </>
+    </div>
   );
 }
 
