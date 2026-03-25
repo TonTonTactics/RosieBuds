@@ -13,7 +13,10 @@ export default defineConfig({
   //
   server: {
     proxy: {
-      '/sensors': 'http://127.0.0.1:8000',
+      '/sensors':{
+        target:'http://127.0.0.1:8000',
+        changeOrigin: true,
+      }
     }
   }
 })

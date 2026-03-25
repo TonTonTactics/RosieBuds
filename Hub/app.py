@@ -53,6 +53,15 @@ def get_sensors(date: date, sensor_id: str):
     """
     return process.rating(sensor_id, relations.select_sensors(date, sensor_id))
 
+@app.get("/sensors/{id}")
+def get_sensors(id: int):
+    """
+    Input: None
+    1. Connects (grab data from date) function with .get event "/sensors/" \n
+    Output: data from date
+    """
+    return relations.select_guide(id)
+
 @app.delete("/sensors/")
 def delete_sensors(date: date):
     """

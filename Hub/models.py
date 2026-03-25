@@ -39,7 +39,7 @@ class CreateSensor(SQLModel):
     temperature: float
     humidity: float
 
-class Guide(SQLModel, table=True):
+class Guidebook(SQLModel, table=True):
     
     id: int | None = Field(default=None, primary_key=True)
     name : str | None = None
@@ -50,6 +50,7 @@ class Guide(SQLModel, table=True):
     opt_humidity_high: float | None = None
     opt_moisture_low: float | None = None
     opt_moisture_high: float | None = None
+    image_url: str | None = None
 
 
 

@@ -31,3 +31,30 @@ export function GetSensors({ sensor_id }) {
     </div>
   );
 }
+
+export function GetGuidebook({ id }) {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    fetch(`/sensors/${id}`)
+      .then(res => res.json())
+      .then(data => setData(data))
+      .catch(() => setError(true));
+  }, [id]);
+
+  if (error) return <div>Error loading data</div>;
+  if (!data) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <div>
+        name: {data.name}
+      </div>
+      <div>
+        tips: <pre>{data.tips}</pre>
+      </div>
+    </div>
+  );
+}
+
