@@ -54,6 +54,26 @@ def select_sensors(date: date, sensor_id: str):
             "humidity": median_h
         }
 
+def select_guide(id: int):
+
+    with Session(db.engine) as session:
+        statement = select(models.Guidebook).where((models.Guidebook.id == id))
+        result = session.exec(statement)
+        plant = result.first()
+
+        return {
+            "id": plant.id,
+            "name": plant.name,
+            "tips": plant.tips,
+            "opt_temperature_low": plant.opt_temperature_low,
+            "opt_temperature_high": plant.opt_temperature_high,
+            "opt_humidity_low": plant.opt_humidity_low,
+            "opt_humidity_high": plant.opt_humidity_high,
+            "opt_moisture_low": plant.opt_moisture_low,
+            "opt_moisture_high": plant.opt_moisture_high,
+            "image_url": plant.image_url
+        }
+
 def delete_sensors(date: date):
     """
     Input: Date (YYYY,MM,DD)
