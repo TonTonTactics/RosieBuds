@@ -1,0 +1,16 @@
+.start-page {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Intro GIF */
+.bg-intro {
+  background-image: url("Webapp/src/assets/backgrounds/Start walkgif.gif");
+}
+
+/* Looping GIF */
+.bg-loop {
+  background-image: url("Webapp/src/assets/backgrounds/Start sitgif.gif");
+}

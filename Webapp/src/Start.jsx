@@ -3,7 +3,7 @@
 Antony Wiegand, Mcmaster, 2026*/}
 
 import { GoGame, GoDashboard } from "./Routes.jsx"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 export default function Start() {
@@ -13,11 +13,18 @@ export default function Start() {
     2. routes: setup, game
     Output: None
     */
+  const [bg, setBg] = useState("intro");
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBg("loop");
+    }, 4000); // change this to your intro gif length in ms
 
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <>
+    <div className={`start-page bg-${bg}`}>
       <h1>START</h1>
       <GoDashboard />
       <GoGame />
@@ -25,7 +32,7 @@ export default function Start() {
       <Mute />
       <Accessability />
       <Settings />
-    </>
+    </div>
   );
 }
 
