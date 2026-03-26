@@ -60,6 +60,7 @@ body {
   left: 10%;
   width: 110px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .gogame:active {
   content: url("clickable/clicked/CLICKEDgogame.png")
@@ -71,6 +72,7 @@ body {
   left: 33.4%;
   height: 242px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .gostartdashboard:active {
   content: url("clickable/clicked/CLICKEDgostartbanner.png")
@@ -82,6 +84,7 @@ body {
   left: 66.7%;
   height: 242px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .goguide:active {
   content: url("clickable/clicked/CLICKEDgoguide.png")
@@ -93,6 +96,7 @@ body {
   left: 25%;
   height: 125px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .godashboardguide:active {
   content: url("clickable/clicked/CLICKEDhome.png")
@@ -104,6 +108,7 @@ body {
   left: 35%;
   height: 125px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .left:active {
   content: url("clickable/clicked/CLICKEDleft.png")
@@ -115,6 +120,7 @@ body {
   left: 45%;
   height: 125px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .right:active {
   content: url("clickable/clicked/CLICKEDright.png")
@@ -126,6 +132,7 @@ body {
   left: 50%;
   font-size: 30px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 
 .gostartgame {
@@ -134,6 +141,7 @@ body {
   left: 65%;
   width: 300px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .gostartgame:active {
   content: url("clickable/clicked/CLICKEDgostartdirt.png")
@@ -146,11 +154,66 @@ body {
   left: 72%;
   width: 300px;
   transform: translate(-50%, -50%);
+  image-rendering: pixelated;
 }
 .reset:active {
   content: url("clickable/clicked/CLICKEDreset.png")
 }
 
+.square {
+  left: 500px;
+  top: 8px;
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
 
+.xo-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+.sq0 { left:345px; top:570px;}
+.sq1 { left:462px; top:570px;}
+.sq2 { left:580px; top:570px;}
+.sq3 { left:345px; top:690px;}
+.sq4 { left:462px; top:690px;}
+.sq5 { left:580px; top:690px;}
+.sq6 { left:345px; top:810px;}
+.sq7 { left:462px; top:810px;}
+.sq8 { left:580px; top:810px;}
+
+.next-player {
+  position: absolute;
+  top: 73%;
+  left: 70.6%;
+  width: 100px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
+
+.next-img {
+  position: absolute;
+  top: 75%;
+  left: 70.6%;
+  width: 100px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
 
 
