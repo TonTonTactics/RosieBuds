@@ -71,11 +71,10 @@ export default function Game() {
     }
 
     const winner = calculateWinner(squares);
-        let status;
         if (winner) {
-        status = "Winner: " + winner;
+        winner;
         } else {
-        status = "Next player: " + (_IsNext ? "X" : "O");
+        (_IsNext ? "X" : "O");
     }
 
 
@@ -84,22 +83,37 @@ export default function Game() {
         <div className="page">
             <div className={"fade-in-on-load"}>
             <img className="game" src="game.png" alt="background" />
-            <div className="status">{status}</div>
+            <div className="status">
+                {winner ? (
+                    <div className="next-player">
+                    <img src={_IsNext ? "clickable/notclick/nexto.png" : "clickable/notclick/nextx.png"}
+                    className="next-img"
+                    />
+                    </div>
+                ) : (
+                    <div className="next-player">
+                    <img src={_IsNext ? "clickable/notclick/nextx.png" : "clickable/notclick/nexto.png"}
+                    className="next-img"
+                    />
+                    </div>
+                )
+            }
+                </div>
 
             <div className="board-row">
-                <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-                <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-                <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+                <Square value={squares[0]} onSquareClick={() => handleClick(0)} className="sq0" />
+                <Square value={squares[1]} onSquareClick={() => handleClick(1)} className="sq1" />
+                <Square value={squares[2]} onSquareClick={() => handleClick(2)} className="sq2" />
             </div>
             <div className="board-row">
-                <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-                <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-                <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+                <Square value={squares[3]} onSquareClick={() => handleClick(3)} className="sq3" />
+                <Square value={squares[4]} onSquareClick={() => handleClick(4)} className="sq4" />
+                <Square value={squares[5]} onSquareClick={() => handleClick(5)} className="sq5" />
             </div>
             <div className="board-row">
-                <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-                <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-                <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+                <Square value={squares[6]} onSquareClick={() => handleClick(6)} className="sq6" />
+                <Square value={squares[7]} onSquareClick={() => handleClick(7)} className="sq7" />
+                <Square value={squares[8]} onSquareClick={() => handleClick(8)} className="sq8" />
             </div>
             <img className="reset" src="clickable/notclick/reset.png" onClick={handleRestart} />
             <GoStartgame go= {handleNavigate} />
@@ -109,10 +123,11 @@ export default function Game() {
     );
 }
 
-function Square( {value, onSquareClick} ) {
+function Square( {value, onSquareClick, className} ) {
     return (
-        <button className="square" onClick={onSquareClick}>
-            {value} 
+        <button className={`square ${className || ""}`} onClick={onSquareClick}>
+            {value === "X" && <img src="clickable/clicked/x.gif" alt="X" className="xo-img"/>}
+            {value === "O" && <img src="clickable/clicked/o.gif" alt="O" className="xo-img"/> }  
         </button>
     );
 }
