@@ -5,6 +5,8 @@ import { GoStart,GoGuidebook } from "./Routes.jsx";
 import { GetSensors } from "./Fetch.jsx"
 import { useState } from "react";
 import "./Dashboard.css"
+import "./index.css"
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   /*
@@ -14,13 +16,31 @@ export default function Dashboard() {
   3. grabs sensor data from today
   Output: None
   */
+    const navigate = useNavigate();
+    const [transitioning, setTransitioning] = useState(false);
+    const [flare, setFlare] = useState(false);
+
+    function handleNavigate(path) {
+    if (transitioning) return;
+
+    setTransitioning(true);
+
+    // flare after 1 second
+    setTimeout(() => {setFlare(true);}, 1000);
+
+    // navigate after animation
+    setTimeout(() => {navigate(path);}, 1500);}
+
   return (
-    <div className="page">
+    <div className={"fade-in-on-load"}>
+      <div className="page">
       <img className="dashboard" src="dashboard.png" alt="background" />
       <h1>DASHBOARD</h1>
-      <GoStart />
-      <GoGuidebook />
+      <GoStart go={handleNavigate}/>
+      <GoGuidebook go={handleNavigate}/>
       <Slot1 />
+      <div className={`screen-transition ${transitioning ? "active" : ""} ${flare ? "flare" : ""}`}/>
+      </div>
     </div>
   );
 }

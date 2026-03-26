@@ -4,8 +4,6 @@ when clicked, routes you to their connected function.
 
 Antony Wiegand, Mcmaster, 2026*/
 
-import { useNavigate } from "react-router-dom";
-
 export function GoStart ( { go }) {
     /*
     Input: None
@@ -13,9 +11,9 @@ export function GoStart ( { go }) {
     Output: When clicked, takes you to start.
     */
     return (
-    <button onClick={() => go("/dashboard")}>
-      Dashboard
-    </button>
+    <div onClick={() => go("/")}>
+      Start
+    </div>
   );
 }
 
@@ -26,36 +24,35 @@ export function GoGame ( { go } ) {
     Output: When clicked, takes you to game.
     */
     return (
-    <button onClick={() => go("/game")}>
+    <div onClick={() => go("/game")}>
       Game
-    </button>
+    </div>
   );
 }
 
 
-export function GoDashboard () {
+export function GoDashboard ( { go } ) {
     /*
     Input: None
     1. creates navigate variable using useNavigate function.
     Output: When clicked, takes you to dashboard.
     */
-    const navigate = useNavigate();
     return (
-        <div className="godashboard" onClick={() => navigate("/dashboard")}>Dashboard</div>
+        <div className="godashboard" onClick={() => go("/dashboard")}>Dashboard</div>
   );
 }
 
-export function GoGuidebook () {
+export function GoGuidebook ( { go } ) {
     /*
     Input: None
     1. creates navigate variable using useNavigate function.
     Output: When clicked, takes you to guidebook.
     */
-    const navigate = useNavigate();
     return (
-        <div className="goguidebook" onClick={() => navigate("/guidebook")}>Guidebook</div>
+        <div className="goguidebook" onClick={() => go("/guidebook")}>Guidebook</div>
   );
 }
+
 
 
 

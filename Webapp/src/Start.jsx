@@ -10,10 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Start() {
   const [bg, setBg] = useState("/intro.gif");
-  const [transitioning, setTransitioning] = useState(false);
-  const [flare, setFlare] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const preloadLoop = new Image();
@@ -25,6 +21,10 @@ export default function Start() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const navigate = useNavigate();
+  const [transitioning, setTransitioning] = useState(false);
+  const [flare, setFlare] = useState(false);
 
   function handleNavigate(path) {
     if (transitioning) return;
@@ -44,6 +44,7 @@ export default function Start() {
 
   return (
     <div className="page">
+      <div className={"fade-in-on-load"}>
       <img className="bg-gif" src={bg} alt="background" />
 
       <h1>START</h1>
@@ -58,11 +59,8 @@ export default function Start() {
       <Settings />
 
       {/* 🔥 overlay */}
-      <div
-        className={`screen-transition ${
-          transitioning ? "active" : ""
-        } ${flare ? "flare" : ""}`}
-      />
+      <div className={`screen-transition ${transitioning ? "active" : ""} ${flare ? "flare" : ""}`}/>
+      </div>
     </div>
   );
 }

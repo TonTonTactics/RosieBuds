@@ -5,8 +5,30 @@ Antony Wiegand, Mcmaster, 2026*/
 import { useState } from 'react';
 import { GoStart } from './Routes.jsx';
 import "./Game.css"
+import "./index.css"
+import { useNavigate } from "react-router-dom";
 
 export default function Game() {
+    const navigate = useNavigate();
+
+    const [transitioning, setTransitioning] = useState(false);
+    const [flare, setFlare] = useState(false);
+
+    function handleNavigate(path) {
+    if (transitioning) return;
+
+    setTransitioning(true);
+
+    // flare after 1 second
+    setTimeout(() => {
+      setFlare(true);
+    }, 1000);
+
+    // navigate after animation
+    setTimeout(() => {
+      navigate(path);
+    }, 1500);
+    }
 
     const initialBoard = Array(9).fill(null);
     // changes state from X to O (or vice versa)
@@ -56,8 +78,11 @@ export default function Game() {
         status = "Next player: " + (_IsNext ? "X" : "O");
     }
 
+
+
     return (
         <div className="page">
+            <div className={"fade-in-on-load"}>
             <img className="game" src="game.png" alt="background" />
             <h1>GAME</h1>
             <div className="status">{status}</div>
@@ -78,7 +103,9 @@ export default function Game() {
                 <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
             </div>
             <button onClick={handleRestart} > Restart </button>
-            <GoStart />
+            <GoStart go= {handleNavigate} />
+            <div className={`screen-transition ${transitioning ? "active" : ""} ${flare ? "flare" : ""}`}/>
+            </div>
         </div>
     );
 }
