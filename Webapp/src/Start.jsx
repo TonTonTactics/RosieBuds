@@ -63,19 +63,18 @@ function CreditBox() {
 
   return(
     <>
-    <div onClick ={()=> setOpen(true)}>
-      Credits
-    </div>
-
+    <img className="credits" src="clickable/notclick/credits.png" onClick ={()=> setOpen(true)}/>
     {open && (
       <div>
-        <div onClick={()=> setOpen(false)}>
-          close
+        <img className="creditsbox" src="squarebox.png"/>
+        <div class="overlay"></div>
+        <div class="creditstext">
+          <img className="creditsclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
+          <p>Gabriel W. (top right)</p>
+          <p>Yusuf E. (bottom right)</p>
+          <p>Tonios M. (bottom left)</p>
+          <p>Antony W. (top left)</p>
         </div>
-        <p>Gabriel</p>
-        <p>Yusuf</p>
-        <p>Tonios</p>
-        <p>Antony</p>
       </div>
     )}
     </>
@@ -96,11 +95,7 @@ function Mute() {
   }
 
   return(
-    <>
-      <div onClick ={toggleMute}>
-        {on ? "Unmute":"Mute"}
-      </div>
-    </>
+    <img className="volume" onClick ={toggleMute} src={on ? "clickable/notclick/volume.png":"clickable/clicked/CLICKEDvolume.png"}/>
   );
 }
 
@@ -120,16 +115,15 @@ function Accessability() {
 
   return(
     <>
-    <div onClick ={()=> setOpen(true)}>
-      Accessability
-    </div>
-
+    <img className="accessability" src="clickable/notclick/accessability.png" onClick ={()=> setOpen(true)}/>
     {open && (
       <div>
-        <div onClick={()=> setOpen(false)}>
-          close
+        <img className="accessabilitybox" src="squarebox.png"/>
+        <div class="overlay"></div>
+        <img className="accessabilityclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
+        <div className="accessabilitytext">
+          <p class="a" onClick={()=>toggleSetting1("setting1")}> Setting 1: {s1on ? "On":"Off"}</p>
         </div>
-        <p onClick={()=>toggleSetting1("setting1")}> Setting 1: {s1on ? "On":"Off"}</p>
       </div>
     )}
     </>
@@ -152,16 +146,16 @@ function Settings() {
 
   return(
     <>
-    <div onClick ={()=> setOpen(true)}>
-      Settings
-    </div>
-
+    <img className="settings" src="clickable/notclick/settings.png" onClick ={()=> setOpen(true)}/>
     {open && (
       <div>
-        <div onClick={()=> setOpen(false)}>
-          close
+        <img className="settingsbox" src="squarebox.png"/>
+        <div class="overlay"></div>
+        <img className="settingsclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
+        
+        <div className="settingstext">
+          <p onClick={()=>toggleSetting2("setting2")}> Setting 2: {s2on ? "On":"Off"}</p>
         </div>
-        <p onClick={()=>toggleSetting2("setting2")}> Setting 2: {s2on ? "On":"Off"}</p>
       </div>
     )}
     </>

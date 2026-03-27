@@ -226,4 +226,156 @@ pre {
   image-rendering: pixelated;
 }
 
+.credits {
+  position: absolute;
+  top: 875px;
+  left: 150px;
+  width: 700px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
+.credits:active {
+  content: url("clickable/clicked/CLICKEDcredits.png")
+}
+
+.creditsbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1300px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+
+.creditstext {
+  position: absolute;
+  z-index: 3;
+  top: 375px;
+  left: 325px;
+  font-size: 30px;
+}
+
+.creditsclose {
+  position: absolute;
+  top: 0%;
+  left: 25%;
+  width: 100px;
+  transform: translate(-100%, -125%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+.creditsclose:active {
+  content: url("clickable/clicked/CLICKEDback.png")
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.volume {
+  position: absolute;
+  top: 875px;
+  left: 400px;
+  width: 700px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+  z-index: -1;
+}
+
+.accessability {
+  position: absolute;
+  top: 875px;
+  left: 966px;
+  width: 700px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
+.accessability:active {
+  content: url("clickable/clicked/CLICKEDaccessability.png")
+}
+
+.accessabilitybox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1300px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+
+.accessabilityclose {
+  position: absolute;
+  top: 290px;
+  left: 340px;
+  width: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+.accessabilityclose:active {
+  content: url("clickable/clicked/CLICKEDback.png")
+}
+
+
+.accessabilitytext {
+  position: absolute;
+  z-index: 3;
+  top: 375px;
+  left: 325px;
+  font-size: 40px;
+}
+
+.settings {
+  position: absolute;
+  top: 875px;
+  left: 1216px;
+  width: 360px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
+.settings:active {
+  content: url("clickable/clicked/CLICKEDsettings.png")
+}
+
+
+.settingsclose {
+  position: absolute;
+  top: 290px;
+  left: 340px;
+  width: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+.settingsclose:active {
+  content: url("clickable/clicked/CLICKEDback.png")
+}
+
+.settingsbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1300px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+
+.settingstext {
+  position: absolute;
+  z-index: 3;
+  top: 375px;
+  left: 325px;
+  font-size: 40px;
+}
+
+
+
+
+
 
