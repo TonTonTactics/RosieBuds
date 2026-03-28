@@ -2,12 +2,24 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import threading
 import time
+from fastapi.middleware.cors import CORSMiddleware
+import json
 
 from . import apmode
 from . import models
 from . import connect
+from . import hash
 
 tracker = FastAPI()
+
+tracker.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://0.0.0.0:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 provision_state = {
     "active": False,
@@ -26,26 +38,61 @@ class CompleteRequest(BaseModel):
     tracker_id: str
     status: str
 
+def load_home_wifi():
+    with open("Network/credentials.json","r",encoding="utf-8") as f:
+        data = json.load(f)
+
+        if not data:
+            return None
+        
+        last_entry = data[-1]
+
+        encrypted= last_entry.get("encrypted")
+        security = last_entry.get("security")
+
+        if not encrypted:
+            raise ValueError(f"No encrypted value found in lastentry: {last_entry}")
+        
+        wifi_data = hash.decrypt_data(encrypted)
+
+    return {
+        "security":security,
+        "credentials":wifi_data
+    }
+
+
 def connect_to_home_wifi(data: models.WifiPayload):
     """Connect using the already-validated Pydantic model"""
 
+    data = load_home_wifi()
+
+    if not data:
+         return {"status": "failed", "error": "No saved home wifi"}
+
+    security = data["security"]
+    creds = data["credentials"]
+
+    if "ssid" in creds and "wifiname" not in creds:
+        creds["wifiname"] = creds["ssid"]
+
     connect_map = {
-        "open": connect.connect_open,
-        "wpa_personal": connect.connect_wpapersonal,
-        "wpa3personal": connect.connect_wpa3,
-        "leap": connect.connect_leap,
-        "eopen": connect.connect_eopen,
-        "wpa_enterprise_tls": connect.connect_wpaenterpriseTLS,
-        "wpa_enterprise_leap": connect.connect_wpaenterpriseLEAP,
-        "wpa_enterprise_pwd": connect.connect_wpaenterprisePWD,
-        "wpa_enterprise_fast": connect.connect_wpaenterpriseFAST,
-        "wpa_enterprise_peap": connect.connect_wpaenterprisePEAP,
-        "wpa_enterprise_ttls": connect.connect_wpaenterpriseTTLS,
+        "open": lambda c:connect.connect_open(models.NoSecurity(**c)),
+        "wpa_personal": lambda c: connect.connect_wpapersonal(models.WpaPersonal(**c)),
+        "wpa3personal": lambda c: connect.connect_wpa3(models.Wpa3(**c)),
+        "leap": lambda c: connect.connect_leap(models.LEAP(**c)),
+        "eopen": lambda c: connect.connect_eopen(models.Eopen(**c)),
+        "wpa_enterprise_tls": lambda c: connect.connect_wpaenterpriseTLS(models.WpaEnterpriseTLS(**c)),
+        "wpa_enterprise_leap": lambda c: connect.connect_wpaenterpriseLEAP(models.WpaEnterpriseLEAP(**c)),
+        "wpa_enterprise_pwd": lambda c: connect.connect_wpaenterprisePWD(models.WpaEnterprisePWD(**c)),
+        "wpa_enterprise_fast": lambda c: connect.connect_wpaenterpriseFAST(models.WpaEnterpriseFAST(**c)),
+        "wpa_enterprise_peap": lambda c: connect.connect_wpaenterprisePEAP(models.WpaEnterprisePEAP(**c)),
+        "wpa_enterprise_ttls": lambda c: connect.connect_wpaenterpriseTTLS(models.WpaEnterpriseTTLS(**c)),
     }
 
-    func = connect_map.get(data.type)
-
-    return func(data)
+    connect_fn=connect_map.get(security)
+    if not connect_fn:
+        return {"status": "Failed","error":f"Unsupported security: {security}"}
+    return connect_fn(creds)
 
 def timeout_provision():
     """
@@ -58,9 +105,9 @@ def timeout_provision():
         print("Provisioning timed out.")
 
         apmode.stop_ap_mode()
-        provision_state["state"] = "returning_to_wifi"
 
-        connect_to_home_wifi()
+        wifi=load_home_wifi()
+        connect_to_home_wifi(wifi)
 
         provision_state["state"] = "timeout"
         provision_state["active"] = False
@@ -81,6 +128,8 @@ def start_provision():
     provision_state["active"] = True
     provision_state["state"] = "ap_mode"
     provision_state["tracker_id"] = None
+
+    
 
     apmode.start_ap_mode()
 
@@ -133,10 +182,12 @@ def claim_provision(data: ClaimRequest):
 
     provision_state["state"] = "credentials_sent"
 
+    wifi = load_home_wifi()
+
     return {
         "ok": True,
-        "ssid": provision_state["ssid"],
-        "password": provision_state["password"],
+        "ssid": wifi.ssid,
+        "password": wifi.password,
         "hub_ip": provision_state["hub_ip"],
         "hub_port": provision_state["hub_port"],
     }
@@ -163,9 +214,9 @@ def complete_provision(data: CompleteRequest):
         }
 
     apmode.stop_ap_mode()
-    provision_state["state"] = "returning_to_wifi"
 
-    connect_to_home_wifi()
+    wifi = load_home_wifi()
+    connect_to_home_wifi(wifi)
 
     provision_state["state"] = "tracker_confirmed"
     provision_state["active"] = False
@@ -176,5 +227,23 @@ def complete_provision(data: CompleteRequest):
         "ok": True,
         "state": provision_state["state"],
     }
+
+@tracker.post("/provision/cancel")
+def cancel_provision():
+    try:
+        apmode.stop_ap_mode()
+        
+        result = connect_to_home_wifi()
+
+        return {
+            "status": "cancelled",
+            "wifi": result
+        }
+    
+    except Exception as e:
+        return {
+            "status": "failed",
+            "error": str(e)
+        }
 
 # uvicorn Network.trackerconnect:tracker --host 0.0.0.0 --port 9000 --reload

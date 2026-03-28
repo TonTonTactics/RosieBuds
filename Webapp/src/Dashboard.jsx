@@ -65,7 +65,7 @@ function Slot1() {
       {open && (
         <div>
           <img className="slotbox" src="squarebox.png" />
-          <div class="overlay"></div>
+          <div className="overlay"></div>
           <img className="slotclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
           <div className="slottext">
             <div>Slot 1 Status: {connected ? "(CLOSED)":"(OPEN)"}</div>

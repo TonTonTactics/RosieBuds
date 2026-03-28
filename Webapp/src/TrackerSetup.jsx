@@ -40,7 +40,7 @@ export default function TrackerSetup() {
 
   async function fetchStatus() {
     try {
-      const res = await fetch(`/provision/status`);
+      const res = await fetch(`http://127.0.0.1:9000/provision/status`);
       if (!res.ok) {
         throw new Error(`Status request failed: ${res.status}`);
       }
@@ -56,7 +56,7 @@ export default function TrackerSetup() {
         stopPolling();
       }
     } catch (err) {
-      setError(err);
+      setError(err instanceof Error ? err.message : String(err));
       setLoading(false);
       stopPolling();
     }
@@ -69,7 +69,7 @@ export default function TrackerSetup() {
     setMessage(getStatusMessage("starting"));
 
     try {
-      const res = await fetch(`/provision/start`, {
+      const res = await fetch(`http://127.0.0.1:9000/provision/start`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export default function TrackerSetup() {
       stopPolling();
       pollRef.current = setInterval(fetchStatus, 1500);
     } catch (err) {
-      setError(err);
+      setError(err instanceof Error ? err.message : String(err));
       setLoading(false);
       setPairState("error");
       setMessage(getStatusMessage("error"));
@@ -103,7 +103,7 @@ export default function TrackerSetup() {
     setMessage(getStatusMessage("idle"));
 
     try {
-      await fetch(`/provision/cancel`, {
+      await fetch(`http://127.0.0.1:9000/provision/cancel`, {
         method: "POST",
       });
     } catch {
