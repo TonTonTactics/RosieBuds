@@ -68,8 +68,8 @@ function CreditBox() {
       <div>
         <img className="creditsbox" src="squarebox.png"/>
         <div class="overlay"></div>
+        <img className="creditsclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
         <div class="creditstext">
-          <img className="creditsclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
           <p>Gabriel W. (top right)</p>
           <p>Yusuf E. (bottom right)</p>
           <p>Tonios M. (bottom left)</p>

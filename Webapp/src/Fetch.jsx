@@ -22,10 +22,10 @@ export function GetSensors({ sensor_id }) {
     <div>
       {data.map(sensor => (
         <div key={sensor.sensor_id}>
-          ID: {sensor.sensor_id} |
-          Water Next: {sensor.water_next} |
-          Temperature: {sensor.temperature_rating} |
-          Humidity: {sensor.humidity_rating}
+          <div>ID: {sensor.sensor_id} </div>
+          <div>Water Next: {sensor.water_next} </div>
+          <div>Temperature: {sensor.temperature_rating} </div>
+          <div>Humidity: {sensor.humidity_rating} </div>
         </div>
       ))}
     </div>
@@ -54,6 +54,7 @@ export function GetGuidebook({ id }) {
       <div>
         tips: <pre>{data.tips}</pre>
       </div>
+      <img className="GuideImage" src={data.image_url}/>
     </div>
   );
 }

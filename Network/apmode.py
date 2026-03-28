@@ -28,7 +28,8 @@ def run_cmd(cmd: list[str]):
 
 def start_ap_mode(
     ssid: str = HOTSPOT_SSID,
-    ifname: str = "wlan0"
+    ifname: str = "wlan0",
+    password: str = "12345678",
 ):
     """Start access point mode with NetworkManager."""
     cmd = [
@@ -36,6 +37,7 @@ def start_ap_mode(
         "ifname", ifname,
         "con-name", HOTSPOT_NAME,
         "ssid", ssid,
+        "password", password,
     ]
     return run_cmd(cmd)
 

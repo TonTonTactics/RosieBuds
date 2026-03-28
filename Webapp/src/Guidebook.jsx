@@ -56,10 +56,10 @@ export default function GuideBook() {
         <div className={"fade-in-on-load"}>
             <img className="guidebook" src="guidebook.png" alt="background" />
             <div className="GuideText">{items[index]}</div>
-            <GoDashboardguide go={handleNavigate}/>
-            <img className="left" src="clickable/notclick/left.png" onClick ={back} disabled ={index === 0}></img>
-            <img className="right" src="clickable/notclick/right.png" onClick ={next} disabled ={index === items.length -1}></img>
-            <div className={`screen-transition ${transitioning ? "active" : ""} ${flare ? "flare" : ""}`}/>
+                <GoDashboardguide go={handleNavigate}/>
+                <img className="left" src="clickable/notclick/left.png" onClick ={back} disabled ={index === 0}></img>
+                <img className="right" src="clickable/notclick/right.png" onClick ={next} disabled ={index === items.length -1}></img>
+                <div className={`screen-transition ${transitioning ? "active" : ""} ${flare ? "flare" : ""}`}/>
             </div>
         </div>
     );

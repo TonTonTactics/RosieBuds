@@ -57,7 +57,7 @@ pre {
 
   top: 40%;
   left: 50%;
-  width: 575px;
+  width: 450px;
   transform: translate(-50%, -50%);
 }
 .godashboardstart:active {
@@ -68,7 +68,7 @@ pre {
   position: absolute;
   top: 50%;
   left: 10%;
-  width: 110px;
+  width: 70px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -78,9 +78,9 @@ pre {
 
 .gostartdashboard {
   position: absolute;
-  top: 33.4%;
-  left: 33.4%;
-  height: 242px;
+  top: 34.7%;
+  left: 37%;
+  height: 105px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -90,9 +90,9 @@ pre {
 
 .goguide {
   position: absolute;
-  top: 33.4%;
-  left: 66.7%;
-  height: 242px;
+  top: 34.7%;
+  left: 63%;
+  height: 105px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -103,8 +103,8 @@ pre {
 .godashboardguide {
   position: absolute;
   top: 70%;
-  left: 25%;
-  height: 125px;
+  left: 30%;
+  height: 75px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -115,8 +115,8 @@ pre {
 .left {
   position: absolute;
   top: 70%;
-  left: 35%;
-  height: 125px;
+  left: 38%;
+  height: 75px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -127,8 +127,8 @@ pre {
 .right {
   position: absolute;
   top: 70%;
-  left: 45%;
-  height: 125px;
+  left: 46%;
+  height: 75px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -139,8 +139,17 @@ pre {
 .GuideText {
   position: absolute;
   top: 40%;
-  left: 50%;
-  font-size: 30px;
+  left: 40%;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+}
+
+.GuideImage {
+  position: absolute;
+  top: 50%;
+  left: 155%;
+  height: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -148,8 +157,8 @@ pre {
 .gostartgame {
   position: absolute;
   top: 50%;
-  left: 65%;
-  width: 300px;
+  left: 62%;;
+  width: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -160,9 +169,9 @@ pre {
 
 .reset {
   position: absolute;
-  top: 85%;
-  left: 72%;
-  width: 300px;
+  top: 83%;
+  left: 67%;
+  width: 75px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -173,8 +182,8 @@ pre {
 .square {
   left: 500px;
   top: 8px;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -198,20 +207,20 @@ pre {
   image-rendering: pixelated;
 }
 
-.sq0 { left:345px; top:570px;}
-.sq1 { left:462px; top:570px;}
-.sq2 { left:580px; top:570px;}
-.sq3 { left:345px; top:690px;}
-.sq4 { left:462px; top:690px;}
-.sq5 { left:580px; top:690px;}
-.sq6 { left:345px; top:810px;}
-.sq7 { left:462px; top:810px;}
-.sq8 { left:580px; top:810px;}
+.sq0 { left:370px; top:400px;}
+.sq1 { left:450px; top:400px;}
+.sq2 { left:530px; top:400px;}
+.sq3 { left:370px; top:475px;}
+.sq4 { left:450px; top:475px;}
+.sq5 { left:530px; top:475px;}
+.sq6 { left:370px; top:555px;}
+.sq7 { left:450px; top:555px;}
+.sq8 { left:530px; top:555px;}
 
 .next-player {
   position: absolute;
-  top: 73%;
-  left: 70.6%;
+  top: 83%;
+  left: 60%;
   width: 100px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
@@ -219,18 +228,18 @@ pre {
 
 .next-img {
   position: absolute;
-  top: 75%;
-  left: 70.6%;
-  width: 100px;
+  top: 83%;
+  left: 50%;
+  width: 75px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
 
 .credits {
   position: absolute;
-  top: 875px;
-  left: 150px;
-  width: 700px;
+  top: 85%;
+  left: 10%;
+  width: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -242,7 +251,7 @@ pre {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1300px;
+  width: 1000px;
   transform: translate(-50%, -50%);
   z-index: 2;
   image-rendering: pixelated;
@@ -251,19 +260,18 @@ pre {
 .creditstext {
   position: absolute;
   z-index: 3;
-  top: 375px;
-  left: 325px;
-  font-size: 30px;
+  top: 250px;
+  left: 315px;
+  font-size: 25px;
 }
 
 .creditsclose {
   position: absolute;
-  top: 0%;
-  left: 25%;
-  width: 100px;
-  transform: translate(-100%, -125%);
+  top: 170px;
+  left: 315px;
+  width: 50px;
   z-index: 2;
-  image-rendering: pixelated;
+  transform: translate(-50%,-50%);
 }
 .creditsclose:active {
   content: url("clickable/clicked/CLICKEDback.png")
@@ -278,9 +286,9 @@ pre {
 
 .volume {
   position: absolute;
-  top: 875px;
-  left: 400px;
-  width: 700px;
+  top: 85%;
+  left: 30%;
+  width: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
   z-index: -1;
@@ -288,9 +296,9 @@ pre {
 
 .accessability {
   position: absolute;
-  top: 875px;
-  left: 966px;
-  width: 700px;
+  top: 85%;
+  left: 70%;
+  width: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -302,7 +310,7 @@ pre {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1300px;
+  width: 1000px;
   transform: translate(-50%, -50%);
   z-index: 2;
   image-rendering: pixelated;
@@ -310,12 +318,11 @@ pre {
 
 .accessabilityclose {
   position: absolute;
-  top: 290px;
-  left: 340px;
-  width: 100px;
-  transform: translate(-50%, -50%);
+  top: 170px;
+  left: 315px;
+  width: 50px;
   z-index: 2;
-  image-rendering: pixelated;
+  transform: translate(-50%,-50%);
 }
 .accessabilityclose:active {
   content: url("clickable/clicked/CLICKEDback.png")
@@ -325,16 +332,16 @@ pre {
 .accessabilitytext {
   position: absolute;
   z-index: 3;
-  top: 375px;
-  left: 325px;
-  font-size: 40px;
+  top: 250px;
+  left: 315px;
+  font-size: 25px;
 }
 
 .settings {
   position: absolute;
-  top: 875px;
-  left: 1216px;
-  width: 360px;
+  top: 85%;
+  left: 90%;
+  width: 150px;
   transform: translate(-50%, -50%);
   image-rendering: pixelated;
 }
@@ -345,12 +352,11 @@ pre {
 
 .settingsclose {
   position: absolute;
-  top: 290px;
-  left: 340px;
-  width: 100px;
-  transform: translate(-50%, -50%);
+  top: 170px;
+  left: 315px;
+  width: 50px;
   z-index: 2;
-  image-rendering: pixelated;
+  transform: translate(-50%,-50%);
 }
 .settingsclose:active {
   content: url("clickable/clicked/CLICKEDback.png")
@@ -360,7 +366,7 @@ pre {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1300px;
+  width: 1000px;
   transform: translate(-50%, -50%);
   z-index: 2;
   image-rendering: pixelated;
@@ -369,13 +375,85 @@ pre {
 .settingstext {
   position: absolute;
   z-index: 3;
-  top: 375px;
+  top: 250px;
+  left: 315px;
+  font-size: 25px;
+}
+
+.slotbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1000px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  image-rendering: pixelated;
+}
+
+.slottext {
+  position: absolute;
+  z-index: 3;
+  top: 200px;
   left: 325px;
-  font-size: 40px;
+  font-size: 30px;
+}
+
+.slotclose {
+  position: absolute;
+  top: 170px;
+  left: 315px;
+  width: 50px;
+  z-index: 2;
+  transform: translate(-50%,-50%);
+}
+.slotclose:active {
+  content: url("clickable/clicked/CLICKEDback.png")
+}
+
+.slot1 {
+  position: absolute;
+  z-index: 1;
+  top: 375px;
+  left: 280px;
+  width: 125px;
+  transform: translate(-50%,-50%);
+}
+
+input {
+  width: 300px;
+  height: 30px;
+  font-size: 25px;
+  font-family: "MedodicaRegular";
+  background-color:rgb(226, 203, 175);
+}
+
+button {
+
+  width: 200px;
+  height: 50px;
+  font-size: 25px;
+  font-family: "MedodicaRegular";
+  background-color:#844625;
+  color: white;
+  border-color: black;
+}
+
+select {
+  width: 300px;
+  height: 30px;
+  font-size: 25px;
+  font-family: "MedodicaRegular";
+  background-color:#844625;
+  color: white;
 }
 
 
-
-
+.status {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 430px;
+  left: 250px;
+}
 
 

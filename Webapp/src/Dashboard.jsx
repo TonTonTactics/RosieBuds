@@ -7,6 +7,7 @@ import { useState } from "react";
 import "./Dashboard.css"
 import "./index.css"
 import { useNavigate } from "react-router-dom";
+import TrackerSetup from "./TrackerSetup.jsx";
 
 export default function Dashboard() {
   /*
@@ -59,22 +60,29 @@ function Slot1() {
 
   return (
     <>
-      <div onClick ={()=> setOpen(true)}>
-        Slot 1
-      </div>
+      <img className="slot1" src="clickable/notclick/slotclosed.png" onClick ={()=> setOpen(true)}/>
 
       {open && (
         <div>
-          <div onClick={()=> setOpen(false)}>
-            close
-          </div>
-          <div>
-            <div>Slot Status: {connected ? "(CLOSED)":"(OPEN)"}</div>
+          <img className="slotbox" src="squarebox.png" />
+          <div class="overlay"></div>
+          <img className="slotclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
+          <div className="slottext">
+            <div>Slot 1 Status: {connected ? "(CLOSED)":"(OPEN)"}</div>
+            <div>
+              <div>How to connect:</div>
+              <div>1. Turn on tracker.</div>
+              <div>2. Click "Connect".</div>
+              <div>3. Wait for tracker to connect.</div>
+              <div>Note: The website will go down for 30sec.</div>
+            </div>
+            <TrackerSetup />
             <div onClick={()=> setConnected(Connection)}>{connected ? "Remove Plant":""}</div>
             <div>{connected ? <GetSensors sensor_id={"1"}/>:""}</div>
-          </div>
+          
           <div onClick={()=> setConnected(Connection)}>
             {connected ? "":"Connect"}
+          </div>
           </div>
         </div>
       )}
