@@ -9,6 +9,7 @@ import json
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+import time
 
 from . import apmode
 from . import hash
@@ -110,6 +111,18 @@ def save_wifi(data: models.WifiPayload):
         "status": "saved",
         "connection": result,
     }
+
+@network.post("/homenetwork")
+def test_connect():
+    try:    
+        connect.connect_home_wifi_ap()
+    except Exception as e:
+        try:
+            connect.disconnect_wifi()
+        except:
+            pass
+        return {"status":f"Error:{str(e)}"}
+
 
 
 network.mount("/", StaticFiles(directory=str(BASE_DIR), html=True), name="setup")

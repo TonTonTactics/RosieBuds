@@ -50,8 +50,7 @@ def stop_ap_mode(ifname: str = "wlan0"):
     ])
     if result["success"]:
         return result
+    
+    run_cmd(["nmcli","device","disconnect","wlan0"])
 
-    # Fallback: disconnect the device
-    return run_cmd([
-        "nmcli", "device", "disconnect", ifname
-    ])
+    return run_cmd(["nmcli","connection","delete","Hotspot"])
