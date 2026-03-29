@@ -3,8 +3,7 @@ import network
 import requests
 import machine
 import dht20
-import urequests as requests
-from machine import Pin, I2C
+
 # from dht20_sensor import sensor
 
 networkssid = "monday-46"
@@ -16,7 +15,7 @@ networkkey = "raspberry"
 '''networkssid = "Gabriel's Pixel"
 networkkey = "abcd1234"'''
 
-huburl = 'https://192.168.250.63/sensors/'
+huburl = 'https://192.168.4.1/sensors/'
 
 i2c = machine.I2C(scl=Pin(22), sda=Pin(21), freq=50000)
 dhtsensor = dht20.DHT20(56, i2c)

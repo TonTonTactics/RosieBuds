@@ -5,55 +5,93 @@ Process data into words.
 Antony Wiegand, McMaster, 2026
 """
 
-def rating(sensor_id, selected_data, guide_data):
-    m = selected_data.get("moisture")
-    t = selected_data.get("temperature")
-    h = selected_data.get("humidity")
+from statistics import mean, median, StatisticsError
 
-    if m is None or t is None or h is None or guide_data is None:
-        return [{
-            "sensor_id": sensor_id,
-            "water_next": "No Data",
-            "temperature_rating": "No Data",
-            "humidity_rating": "No Data"
-        }]
+COMPARISONREADINGS = 6
+MAXTEMPVARIANCE = 5
+MAXHUMIDVARIANCE = 20
 
-    # moisture / watering
-    low_m = guide_data["opt_moisture_low"]
-    high_m = guide_data["opt_moisture_high"]
 
-    if m < low_m:
-        water = "Water now"
-    elif m > high_m:
-        water = "Too wet"
-    else:
-        water = "Good"
+def validate_sensor_data(sensors):
+    m = [r.moisture for r in sensors]
+    t = [r.temperature for r in sensors]
+    h = [r.humidity for r in sensors]
 
-    # temperature
-    low_t = guide_data["opt_temperature_low"]
-    high_t = guide_data["opt_temperature_high"]
+    try:
+        median_m = median(m)
+    except StatisticsError:
+        median_m = None
 
-    if t < low_t:
-        temp_rating = "Too Cold"
-    elif t > high_t:
-        temp_rating = "Too Hot"
-    else:
-        temp_rating = "Good"
+    try:
+        tempdeltas = []
+        for datapoint in range(1, len(t) - 1):
+            tempdeltas.append(t[datapoint] - t[datapoint + 1])
 
-    # humidity
-    low_h = guide_data["opt_humidity_low"]
-    high_h = guide_data["opt_humidity_high"]
+        tempprediction = t[1] + mean(tempdeltas)
 
-    if h < low_h:
-        hum_rating = "Too Dry"
-    elif h > high_h:
-        hum_rating = "Too Humid"
-    else:
-        hum_rating = "Good"
+        if abs(t[0] - tempprediction) > MAXTEMPVARIANCE:
+            validated_t = None
+        else:
+            validated_t = t[0]
+    except (StatisticsError, IndexError):
+        validated_t = None
 
+    try:
+        humiddeltas = []
+        for datapoint in range(1, len(h) - 1):
+            humiddeltas.append(h[datapoint] - h[datapoint + 1])
+
+        humidprediction = h[1] + mean(humiddeltas)
+
+        if abs(h[0] - humidprediction) > MAXHUMIDVARIANCE:
+            validated_h = None
+        else:
+            validated_h = h[0]
+    except (StatisticsError, IndexError):
+        validated_h = None
+
+    return {
+        "moisture": median_m,
+        "temperature": validated_t,
+        "humidity": validated_h
+    }
+
+
+def range_rating(value, low, high):
+    if value is None or low is None or high is None:
+        return "No Data"
+    if low <= value <= high:
+        return "Good"
+    return "Bad"
+
+
+def water_message(value, low, high):
+    if value is None or low is None or high is None:
+        return "No Data"
+    if value < low:
+        return "Water Needed"
+    if value > high:
+        return "Too Wet"
+    return "Good"
+
+
+def rating(sensor_id, sensor_data, guide_data):
     return [{
         "sensor_id": sensor_id,
-        "water_next": water,
-        "temperature_rating": temp_rating,
-        "humidity_rating": hum_rating
+        "plant_name": guide_data.get("name"),
+        "moisture": water_message(
+            sensor_data.get("moisture"),
+            guide_data.get("opt_moisture_low"),
+            guide_data.get("opt_moisture_high")
+        ),
+        "temperature": range_rating(
+            sensor_data.get("temperature"),
+            guide_data.get("opt_temperature_low"),
+            guide_data.get("opt_temperature_high")
+        ),
+        "humidity": range_rating(
+            sensor_data.get("humidity"),
+            guide_data.get("opt_humidity_low"),
+            guide_data.get("opt_humidity_high")
+        )
     }]

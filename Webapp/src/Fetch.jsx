@@ -26,11 +26,14 @@ export function GetSensors({ sensor_id, plant_type }) {
   return (
     <div>
       {data.map(sensor => (
-        <div key={sensor.sensor_id}>
-          <div>ID: {sensor.sensor_id}</div>
-          <div>Water Next: {sensor.water_next}</div>
-          <div>Temperature: {sensor.temperature_rating}</div>
-          <div>Humidity: {sensor.humidity_rating}</div>
+        <div key={sensor?.sensor_id ?? "none"}>
+          <div key={sensor?.plant_name ?? "none"}>
+            <div>Plant: {sensor?.plant_name}</div>
+          </div>
+          <div>ID: {sensor?.sensor_id}</div>
+          <div>Moisture: {sensor?.moisture}</div>
+          <div>Temperature: {sensor?.temperature}</div>
+          <div>Humidity: {sensor?.humidity}</div>
         </div>
       ))}
     </div>
