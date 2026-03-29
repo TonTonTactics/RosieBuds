@@ -3,11 +3,10 @@
 Antony Wiegand, Mcmaster, 2026*/
 import { GoStartdashboard,GoGuidebook } from "./Routes.jsx";
 import { GetSensors } from "./Fetch.jsx"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Dashboard.css"
 import "./index.css"
 import { useNavigate } from "react-router-dom";
-import TrackerSetup from "./TrackerSetup.jsx";
 
 export default function Dashboard() {
   /*
@@ -46,63 +45,95 @@ export default function Dashboard() {
 }
 
 function Slot1() {
-  const stored = localStorage.getItem("connected1") === "true";
   const [open, setOpen] = useState(false);
-  const [connected, setConnected] = useState(stored);
-  const [loading, setLoading] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [plant, setPlant] = useState(localStorage.getItem("plant1") || "");
 
-  function handleConnected() {
+  function handleConnect() {
+    if (!plant) return;
+
+    localStorage.setItem("plant1", plant);
+    localStorage.setItem("connected1", "true");
     setConnected(true);
-    setLoading(false);
-    localStorage.setItem("connected1",true);
   }
 
   function handleRemove() {
-    setConnected(false)
-    localStorage.setItem("connected1",true);
+    localStorage.removeItem("plant1");
+    localStorage.setItem("connected1", "false");
+    setPlant("");
+    setConnected(false);
   }
 
   return (
     <>
-      <img className="slot1" src="clickable/notclick/slotclosed.png" onClick ={()=> setOpen(true)}/>
+      <img
+        className="slot1"
+        src="clickable/notclick/slotclosed.png"
+        onClick={() => setOpen(true)}
+      />
 
       {open && (
         <div>
           <img className="slotbox" src="squarebox.png" />
           <div className="overlay"></div>
-          <img className="slotclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
+
+          <img
+            className="slotclose"
+            src="clickable/notclick/back.png"
+            onClick={() => setOpen(false)}
+          />
+
           <div className="slottext">
-            <div>Slot 1 Status: {connected ? "(CLOSED)":"(OPEN)"}</div>
-            {!connected && !loading && (
-            <>
-              <div>How to connect:</div>
-              <div>1. Turn on tracker.</div>
-              <div>2. Click "Connect".</div>
-              <div>3. Wait for tracker to connect.</div>
-              <div>Note: The website will go down for 30sec.</div>
+            <div>Slot Status: {connected ? "(CLOSED)" : "(OPEN)"}</div>
 
-              <TrackerSetup
-              onStart ={() => setLoading(true)}
-              onConnected={handleConnected}
-              onFail ={() => setLoading(false)}
-              />
-            </>
-
-            )}
-
-            {!connected && loading && (
-              <div>Connecting to tracker...</div>
+            {!connected && (
+              <PlantSelect plant={plant} setPlant={setPlant} />
             )}
 
             {connected && (
-              <>
+              <div>Selected Plant ID: {plant}</div>
+            )}
+
+            {connected && (
               <div onClick={handleRemove}>Remove Plant</div>
-              <GetSensors sensor_id={"1"}/>
-              </>
+            )}
+
+            <div>
+              {connected && (
+                <GetSensors sensor_id={"1"} plant_type={plant} />
+              )}
+            </div>
+
+            {!connected && (
+              <div onClick={handleConnect}>
+                Connect
+              </div>
             )}
           </div>
         </div>
       )}
     </>
+  );
+}
+
+function PlantSelect({ plant, setPlant }) {
+  const [plants, setPlants] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/guidebook")
+      .then(res => res.json())
+      .then(data => setPlants(data))
+      .catch(() => setPlants([]));
+  }, []);
+
+  return (
+    <select value={plant} onChange={(e) => setPlant(e.target.value)}>
+      <option value="">Select a plant</option>
+      {plants.map((item) => (
+        <option key={item.id} value={item.id}>
+          {item.name}
+        </option>
+      ))}
+    </select>
   );
 }

@@ -17,6 +17,10 @@ pre {
   z-index: 9999;
 }
 
+select {
+  border-color: black;
+}
+
 @font-face {
   font-family: "MedodicaRegular";
   src: url(fonts/MedodicaRegular.otf);

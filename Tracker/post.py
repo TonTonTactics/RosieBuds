@@ -1,1 +1,0 @@
-# have this be how the tracker sends data to the database on the hub using .post request.

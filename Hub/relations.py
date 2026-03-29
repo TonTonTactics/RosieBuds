@@ -87,6 +87,15 @@ def select_guide(id: int):
             "opt_moisture_high": plant.opt_moisture_high,
             "image_url": plant.image_url
         }
+    
+def select_all_guides():
+    with Session(db.engine) as session:
+        statement = select(models.Guidebook)
+        result = session.exec(statement)
+        plant = result.all()
+
+    return plant
+
 
 def delete_sensors(date: date):
     """

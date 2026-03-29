@@ -26,6 +26,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://0.0.0.0:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.on_event("startup")
 def on_startup():
     """
@@ -45,33 +57,37 @@ def post_sensor(sensor: models.CreateSensor):
     relations.create_sensors(sensor)
 
 @app.get("/sensors/")
-def get_sensors(date: date, sensor_id: str):
-    """
-    Input: None
-    1. Connects (grab data from date) function with .get event "/sensors/" \n
-    Output: data from date
-    """
+def get_sensors(date: date, sensor_id: str, plant_type: int):
     try:
-        m=process.rating(sensor_id, relations.select_sensors(date, sensor_id))
+        sensor_data = relations.select_sensors(date, sensor_id)
+        guide_data = relations.select_guide(plant_type)
+        return process.rating(sensor_id, sensor_data, guide_data)
     except TypeError:
-        n = [{
+        return [{
             "sensor_id": sensor_id,
             "water_next": "No Data",
             "temperature_rating": "No Data",
             "humidity_rating": "No Data"
-            }]
-        return n
-        
-    return m
+        }]
 
-@app.get("/sensors/{id}")
-def get_sensors(id: int):
+@app.get("/guidebook/{id}")
+def get_guidebook(id: int):
     """
     Input: None
     1. Connects (grab data from date) function with .get event "/sensors/" \n
     Output: data from date
     """
     return relations.select_guide(id)
+
+@app.get("/guidebook")
+def get_guidebook_list():
+    """
+    Input: None
+    1. Connects (grab all guidebook data) function with .get event "/guidebook" \n
+    Output: all guidebook data
+    """
+    return relations.select_all_guides()
+
 
 @app.delete("/sensors/")
 def delete_sensors(date: date):

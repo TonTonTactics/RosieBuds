@@ -1,1 +1,0 @@
-# have all sensor reading here
