@@ -203,3 +203,27 @@ async function connectWifi() {
         statusEl.innerText = "Connection failed";
     }
 }
+
+document.getElementById("testconnectBtn").addEventListener("click",testConnect);
+async function testConnect() {
+    const statusE1 = document.getElementById("status");
+    statusE1.innerText = "Starting Home Network...";
+    try {const res=await fetch("/homenetwork", {
+        method:"POST",
+        headers: {
+            "Content-Type":"Network/credentials.json"
+        },
+    });
+
+const data = await res.json();
+
+    if (!res.ok) {
+    statusE1.innerText = data.detail || "Home Network connect Complete";
+    }
+
+    statusE1.innerText = data.status || "Home Network connect Complete"
+    } catch (err) {
+        console.error(err);
+        statusE1.innerText = "Home Network connect failed";
+    }
+}

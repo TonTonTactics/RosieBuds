@@ -4,6 +4,7 @@ import threading
 import time
 from fastapi.middleware.cors import CORSMiddleware
 import json
+import threading
 
 from . import apmode
 from . import models
@@ -99,7 +100,7 @@ def timeout_provision():
     Wait 30 seconds. If tracker has not connected,
     stop AP mode and return to normal Wi-Fi.
     """
-    time.sleep(30)
+    time.sleep(60)
 
     if provision_state["state"] == "waiting_for_tracker":
         print("Provisioning timed out.")
@@ -129,7 +130,7 @@ def start_provision():
     provision_state["state"] = "ap_mode"
     provision_state["tracker_id"] = None
 
-    
+    apmode.stop_ap_mode()
 
     apmode.start_ap_mode()
 
@@ -154,6 +155,38 @@ def get_provision_status():
         "active": provision_state["active"],
         "state": provision_state["state"],
         "tracker_id": provision_state["tracker_id"],
+    }
+
+@tracker.get("/provision/credentials")
+def get_provision_credentials():
+    if not provision_state["active"]:
+        return {
+            "ok": False,
+            "error": "No saved home Wi-Fi credentials"
+        }
+    
+    wifi = load_home_wifi()
+    if not wifi:
+        return {
+            "ok": False,
+            "error": "No saved home Wi-Fi credentials"
+        }
+    
+    creds = wifi["credentials"]
+
+    def switch_back():
+        time.sleep(2)
+        apmode.stop_ap_mode()
+        connect.connect_home_wifi_ap()
+
+    threading.Thread(target=switch_back, daemon=True).start()
+
+    return {
+        "ok": True,
+        "ssid": creds.get("ssid") or creds.get("wifiname"),
+        "password": creds.get("password",""),
+        "hub_ip": provision_state["hub_ip"],
+        "hub_port": provision_state["hub_port"],
     }
 
 

@@ -1,5 +1,6 @@
 import subprocess
 from . import models
+import time
 
 
 def run_nmcli(cmd: list[str]):
@@ -218,3 +219,20 @@ def disconnect_wifi(ifname: str = "wlan0"):
     
     print(f"Failed to disconnect {ifname}: {result.stderr}")
     return False
+
+def connect_home_wifi_ap():
+    create = [
+        "nmcli", "device", "wifi", "hotspot",
+        "ifname", "wlan0",
+        "con-name", "homenetwork",
+        "ssid", "homenetwork",
+        "password", "12345678",
+    ]
+    run_cmd(create)
+    time.sleep(3)
+
+    connect = [
+        "nmcli", "dev", "wifi", "connect", "homenetwork",
+        "password", "12345678",
+    ]
+    return run_nmcli(connect)
