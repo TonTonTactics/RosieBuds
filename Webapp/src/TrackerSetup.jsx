@@ -51,9 +51,11 @@ export default function TrackerSetup() {
       setPairState(state);
       setMessage(getStatusMessage(state));
 
+      
       if (state === "tracker_confirmed" || state === "timeout" || state === "idle") {
         setLoading(false);
         stopPolling();
+        onConnected?.();
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));

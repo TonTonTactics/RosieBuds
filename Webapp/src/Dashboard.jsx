@@ -49,13 +49,17 @@ function Slot1() {
   const stored = localStorage.getItem("connected1") === "true";
   const [open, setOpen] = useState(false);
   const [connected, setConnected] = useState(stored);
+  const [loading, setLoading] = useState(false);
 
-  function Connection() {
-    const newValue = !connected
+  function handleConnected() {
+    setConnected(true);
+    setLoading(false);
+    localStorage.setItem("connected1",true);
+  }
 
-    setConnected(newValue);
-    localStorage.setItem("connected1",newValue);
-    console.log("(Saved) connected1: ",newValue);
+  function handleRemove() {
+    setConnected(false)
+    localStorage.setItem("connected1",true);
   }
 
   return (
@@ -69,20 +73,33 @@ function Slot1() {
           <img className="slotclose" src="clickable/notclick/back.png" onClick={()=> setOpen(false)}/>
           <div className="slottext">
             <div>Slot 1 Status: {connected ? "(CLOSED)":"(OPEN)"}</div>
-            <div>
+            {!connected && !loading && (
+            <>
               <div>How to connect:</div>
               <div>1. Turn on tracker.</div>
               <div>2. Click "Connect".</div>
               <div>3. Wait for tracker to connect.</div>
               <div>Note: The website will go down for 30sec.</div>
-            </div>
-            <TrackerSetup />
-            <div onClick={()=> setConnected(Connection)}>{connected ? "Remove Plant":""}</div>
-            <div>{connected ? <GetSensors sensor_id={"1"}/>:""}</div>
-          
-          <div onClick={()=> setConnected(Connection)}>
-            {connected ? "":"Connect"}
-          </div>
+
+              <TrackerSetup
+              onStart ={() => setLoading(true)}
+              onConnected={handleConnected}
+              onFail ={() => setLoading(false)}
+              />
+            </>
+
+            )}
+
+            {!connected && loading && (
+              <div>Connecting to tracker...</div>
+            )}
+
+            {connected && (
+              <>
+              <div onClick={handleRemove}>Remove Plant</div>
+              <GetSensors sensor_id={"1"}/>
+              </>
+            )}
           </div>
         </div>
       )}
