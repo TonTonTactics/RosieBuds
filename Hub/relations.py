@@ -6,10 +6,23 @@ Antony Wiegand, McMaster, 2026"""
 
 from sqlmodel import Session, select, delete
 from datetime import date
-from statistics import median, StatisticsError
+from statistics import mean, median, StatisticsError
 
 from . import models
 from . import db
+
+COMPARISONREADINGS = 6
+MAXTEMPVARIANCE = 5
+MAXHUMIDVARIANCE = 20
+
+tempdeltas = []
+for j in range (0, COMPARISONREADINGS - 1):
+    tempdeltas.append (None)
+
+humiddeltas = []
+for l in range (0, COMPARISONREADINGS - 1):
+    humiddeltas.append(None)
+
 
 def create_sensors(sensor: models.CreateSensor):
     """
@@ -39,7 +52,7 @@ def select_sensors(date: date, sensor_id: str):
         statement = select(models.Sensor).where(
             (models.Sensor.timestamp.like(f"{date}%")) &
             (models.Sensor.sensor_id == sensor_id)
-        )
+        ).limit(COMPARISONREADINGS)
         sensors = session.exec(statement).all()
 
         m = [r.moisture for r in sensors]
@@ -53,19 +66,35 @@ def select_sensors(date: date, sensor_id: str):
             median_m = None
 
         try:
-            median_t = median(t)
+            for datapoint in range (1, COMPARISONREADINGS - 1):
+                tempdelta[datapoint] = t[datapoint] - t[datapoint + 1]
+
+            tempprediction = t[1] + statistics.mean(tempdeltas)
+
+            if abs(t[0] - tempprediction) > MAXTEMPVARIANCE:
+                validated_t = None
+            else:
+                validated_t = t[0]
         except StatisticsError:
             median_t = None
 
         try:
-            median_h = median(h)
+            for datapoint in range (1, COMPARISONREADINGS - 1):
+                humiddelta[datapoint] = h[datapoint] - h[datapoint + 1]
+
+            humidprediction = h[1] + statistics.mean(humiddeltas)
+
+            if abs(h[0] - humidprediction) > MAXHUMIDVARIANCE:
+                validated_h = None
+            else:
+                validated_h = h[0]
         except StatisticsError:
             median_h = None
 
         return {
             "moisture": median_m,
-            "temperature": median_t,
-            "humidity": median_h
+            "temperature": validated_t,
+            "humidity": validated_h
         }
 
 def select_guide(id: int):
