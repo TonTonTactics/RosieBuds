@@ -34,6 +34,7 @@ export function GetSensors({ sensor_id, plant_type }) {
           <div>Moisture: {sensor?.moisture}</div>
           <div>Temperature: {sensor?.temperature}</div>
           <div>Humidity: {sensor?.humidity}</div>
+          <img className="plantpic" src={sensor?.image_url} />
         </div>
       ))}
     </div>

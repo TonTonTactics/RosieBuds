@@ -77,6 +77,7 @@ function CreditBox() {
         </div>
       </div>
     )}
+    <img className="group" src="group.png" />
     </>
   );
 }
