@@ -1,48 +1,57 @@
 import time
 import network
-import requests
 import machine
 import dht20
+import urequests as requests
+import ujson
+from machine import Pin, I2C
 
-# from dht20_sensor import sensor
+networkssid = "The_Hub"
+networkkey = "12345678"
 
-networkssid = "monday-46"
-networkkey = "raspberry"
-# Web database location = http://127.0.0.1:8000/sensors/
+huburl = 'http://192.168.4.1:8000/sensors/'
 
-# Soil moisture range [0-2500]
-
-'''networkssid = "Gabriel's Pixel"
-networkkey = "abcd1234"'''
-
-huburl = 'https://192.168.4.1/sensors/'
-
-i2c = machine.I2C(scl=Pin(22), sda=Pin(21), freq=50000)
+i2c = machine.I2C(scl=Pin(26), sda=Pin(33), freq=50000)
 dhtsensor = dht20.DHT20(56, i2c)
 
-moisture = machine.ADC (Pin(4))
+moisture = machine.ADC (Pin(34))
+onepercentmoisture = 35
 
-'''pinetwork = network.WLAN(network.WLAN.IF_STA) # Might have to use .active() if the object doesn't start activated?
+head = {'Content-Type': 'application/json'}
+
+pinetwork = network.WLAN(network.WLAN.IF_STA) # Might have to use .active() if the object doesn't start activated?
 pinetwork.active (False)
 time.sleep(5)
-pinetwork.active (True)'''
+pinetwork.active (True)
 
 while True:
-    '''if not pinetwork.isconnected():
+    if not pinetwork.isconnected():
         while not pinetwork.isconnected():
-            print(pinetwork.scan())
-            pinetwork.connect (networkssid)
+            pinetwork.disconnect()
+            time.sleep (4)
             print ("Attempting to connect...")
-            time.sleep(3)
+            pinetwork.connect (networkssid, networkkey)
+            print (pinetwork.status ())
+            time.sleep(4)
 
-        print ("Connected to access point.")'''
-    soilmoisture = moisture.read()  
-    print (soilmoisture)
+        print ("Connected to access point.")
+    rawmoisture = moisture.read()
+    soilmoisture = (100 - (rawmoisture / onepercentmoisture)) / 100
+    
+    print (rawmoisture)
     print (i2c.scan())      
     readings = dhtsensor.measurements
-        
+    readings.update ({'moisture': soilmoisture})
+    readings.update ({'sensor_id': '1'})
     print (readings)
-    
-    r = requests.post(huburl, data='Hi')
 
-    time.sleep(2)
+    jsontest = ujson.dumps (readings)
+    
+    try:
+        requests.post(huburl, json=readings)
+    except:
+        continue
+        
+
+    time.sleep(5)
+    # machine.deepsleep (600000) # sleep for 10 mins
