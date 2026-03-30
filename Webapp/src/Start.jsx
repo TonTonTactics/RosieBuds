@@ -75,9 +75,9 @@ function CreditBox() {
           <p>Tonios M. (bottom left)</p>
           <p>Antony W. (top left)</p>
         </div>
+        <img className="group" src="group.png" />
       </div>
     )}
-    <img className="group" src="group.png" />
     </>
   );
 }
