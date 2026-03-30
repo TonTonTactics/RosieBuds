@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <>
-    <audio ref={audioRef} loop>
+    <audio ref={audioRef} loop controls>
       <source src="/music/background.mp3" type="audio/mpeg"/>
     </audio>
 

@@ -8,7 +8,7 @@ import "./Start.css";
 import "./index.css"
 import { useNavigate } from "react-router-dom";
 
-export default function Start() {
+export default function Start({ muted, setMuted }) {
   const [bg, setBg] = useState("/intro.gif");
 
   useEffect(() => {
@@ -48,8 +48,8 @@ export default function Start() {
           <img className="bg-gif" src={bg} alt="background" />
           <GoDashboardstart go={handleNavigate} />
           <GoGame go={handleNavigate} />
+          <Mute muted={muted} setMuted={setMuted} />
           <CreditBox />
-          <Mute />
           <Accessability />
           <Settings />
 
@@ -81,15 +81,28 @@ function CreditBox() {
   );
 }
 
-function Mute( muted, setMuted ) {
+function Mute({ muted, setMuted }) {
   function toggleMute() {
-    const newValue =!muted;
+    const newValue = !muted;
     setMuted(newValue);
-    localStorage.setItem("mute",newValue);
+    localStorage.setItem("mute", newValue);
+    console.log("mute changed to:", newValue);
   }
 
-  return(
-    <img className="volume" onClick ={toggleMute} src={muted ? "clickable/notclick/volume.png" : "clickable/clicked/CLICKEDvolume.png"}/>
+  return (
+    <img
+      className="volume"
+      onClick={() => {
+      console.log("mute clicked");
+      toggleMute();
+      }}
+      src={
+        muted
+          ? "clickable/notclick/volume.png"
+          : "clickable/clicked/CLICKEDvolume.png"
+      }
+      alt="volume"
+    />
   );
 }
 
