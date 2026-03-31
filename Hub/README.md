@@ -22,6 +22,7 @@ Hub/
 ├── db.py           # Database setup
 ├── models.py       # SQLModel schemas
 ├── relations.py    # Database relationship logic
+├── process.py      # Compares value to optimal values
 └── requirements.txt
 ```
 
