@@ -24,14 +24,17 @@ src/
 │
 ├── App.jsx          # Main React app component
 ├── Dashboard.jsx    # Dashboard UI
+├── Dashboard.css
 ├── Fetch.jsx        # Fetching data from the Hub API
 ├── Game.jsx         # Tic-Tac-Toe game component (mini-game)
+├── Game.css
 ├── Guidebook.jsx    # Guidebook UI component
+├── Guidebook.css
 ├── index.css        # Global CSS styles
 ├── main.jsx         # Entry point
 ├── Routes.jsx       # Defines app routing and page navigation
-├── Setup.jsx        # Setup UI component
 ├── Start.jsx        # landing page of the app
+├── Start.css
 └── styles.css       # Component-specific styles
 ```
 
