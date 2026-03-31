@@ -59,6 +59,8 @@ Great work guys!
 
 <img width="396" height="288" alt="Screenshot 2026-03-30 at 11 25 49 PM" src="https://github.com/user-attachments/assets/2ac6909d-a67a-4928-b6e1-b16c0de74ec9" />
 
+![RosieDogSitLeftHappy](https://github.com/user-attachments/assets/762077e4-99ba-43db-b0fe-2718c126cb4b)
+
 
 ## License
 
